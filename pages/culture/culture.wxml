@@ -1,0 +1,30 @@
+<!--pages/culture/culture.wxml-->
+<view class="container">
+
+<view class="fixed-btns-box" bindtap="onCartTap">
+	<view class="fiexd-cart {{isShake?'animate':''}}">
+		<image src="../../imgs/icon/cart@top.png"></image>
+		<view wx:if="{{cartTotalCounts>0}}">{{cartTotalCounts}}</view>
+	</view>
+</view>
+	<!-- <image class="culture" src="https://minip.ps-house.com/images/culture.jpg" mode="widthFix"></image> -->
+
+<!-- https://crm.ps-house.com:8060/images/ -->
+	<image class="culture" src="https://crm.ps-house.com:8060/images/culture1.jpg" mode="widthFix"></image>
+  <view class="text-box"><text>国际化集团公司 A MULTINATIONAL COMPANY
+台升国际集团为一家垂直整合之跨国企业集团，成员分布于美国、英国、中国大陆、香港、台湾等地。集团于2005年，以“顺诚控股”于香港证交所上市，实力宏厚。现是亚洲第一大木制家具生产商、全球第三大规模的家具生产商，美国家具市场最大的供货商之一。
+台升国际集团生产、经营高质量家居家具，主要销往欧、美等发达国家和部分发展中国家，旗下多个美国品牌销售各类家具产品，包含Universal Furniture、Smartstuff by Universal、Legacy Classic Furniture、Legacy Classic Kids、Craftmaster Furniture、LacquerCraft  Hospitality、Grand Manor、Baker、McGuire、Milling Road，LC- Direct亦获Paula Deen、Wendy Bellissimo、Coastal Living以及英国Willis Gambier授予许可经营权。
+在中国内销市场，台升国际集团经营环美家居(UNIVERSAL)、环美·雷格西(LEGACY)两大品牌。</text></view>
+  
+  <image class="culture" src="https://crm.ps-house.com:8060/images/culture2.jpg" mode="widthFix"></image>
+  <view class="text-box"><text>环美家居——1953年始于美国，致力于打造高端美式家居生活方式，风格典雅尊贵，在北美、欧洲、亚洲市场有超千家实体店面，是美国畅销家具品牌之一。
+环美家居拥有包括著名的伯格林设计工作室、Berry & Clark Design Associates (BCDA)、史蒂文．罗素设计公司、宝拉丁等国际设计团队，产品风格涵盖古典尊贵、气质休闲、现代摩登及青少年系列，源自美国的原创设计、富有艺术感的造型满足了品味人士对高价值高品质家居生活的追求。</text></view>
+
+
+
+	<image class="culture" src="https://crm.ps-house.com:8060/images/culture3.jpg" mode="widthFix"></image>
+  <view class="text-box" style="margin-bottom:40rpx;"><text>美国时尚家居品牌，1999年3月创立于世界家具之都美国高点，2013年获得美国家具界的奥斯卡“尖峰设计奖”，正如她的名字取意“传承经典”，来自美国原创的设计灵感，完美融合现代风格元素，为全球家庭带来家居生活新风尚。
+自”环美 • 雷格西”引入中国以来，其 “简约时尚、精致优雅”的家居风格给生活注入了全新能量。</text></view>
+
+
+</view>

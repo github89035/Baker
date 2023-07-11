@@ -1,0 +1,19 @@
+<view class="container">
+	<view class="fixed-btns-box" bindtap="onCartTap">
+		<view class="fiexd-cart {{isShake?'animate':''}}">
+			<image src="../../imgs/icon/cart@top.png"></image>
+			<view wx:if="{{cartTotalCounts>0}}">{{cartTotalCounts}}</view>
+		</view>
+	</view>
+	<view class="top"></view>
+
+	<block wx:for="{{caseListData}}">
+
+		<view class="case-box" data-fDesignCaseID="{{item.fDesignCaseID}}" data-fDesignName="{{item.fDesignName}}" bindtap="goToCaseDetial">
+			<view class="image-box">
+				<image src="{{item.fImageUrl}}" mode="aspectFill"></image>
+			</view>
+			<view class="text-box"><text>{{item.fDesignName}}</text></view>
+		</view>
+	</block>
+</view>

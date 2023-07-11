@@ -1,0 +1,43 @@
+<!--pages/cartlist/cartlist.wxml-->
+<view class="item-main">
+	<block wx:for="{{cartArr}}">
+		<view wx:if="{{item != null}}" class="cartlist-item">
+			<view class="cartlist-main" ontap="GoToCart" data-index="{{item.index}}">
+					<block wx:for="{{item.data}}" wx:for-item="cartlistitem">
+						<view class="item-left">
+							<image src="{{cartlistitem.fImageUrl}}" mode="aspectFit"></image>
+						</view>
+					</block>
+			</view>
+			<view class="cartlist-bottom">
+        <text>{{language.lang_myorder_realprice}}：NT$ {{func.ToPriceStr(item.sum)}}</text>
+        <view class="delete" bindtap="deleteCartData"  data-index="{{item.index}}">刪除</view>
+			</view>
+		</view>
+	</block>
+</view>
+
+<wxs module="func">
+    module.exports = {
+      ToPriceStr: function (e) {
+        if(e == undefined) return '';
+    
+        var tmpNum = e.toString();
+        var tmpStr = '';
+        var strIndex = 0;
+        for (var i = (tmpNum.length - 1); i >= 0; i--) {
+          if(((strIndex % 3) == 0) && (strIndex != 0))
+          {
+            tmpStr = tmpNum[i] + "," + tmpStr;
+          }
+          else
+          {
+            tmpStr = tmpNum[i] + tmpStr;
+          }
+    
+          strIndex = strIndex + 1;
+        }
+        return tmpStr;
+      }
+    }
+</wxs> 

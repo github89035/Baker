@@ -1,0 +1,17 @@
+<view class="container">
+	<view class="fixed-btns-box" bindtap="onCartTap">
+		<view class="fiexd-cart {{isShake?'animate':''}}">
+			<image src="../../imgs/icon/cart@top.png"></image>
+			<view wx:if="{{cartTotalCounts>0}}">{{cartTotalCounts}}</view>
+		</view>
+	</view>
+	<view class="image-box">
+		<image src="{{fImageUrl}}" mode="aspectFill"></image>
+	</view>
+	<view class="text-box">
+		<view class="bottom-border">{{fOrgName}}</view>
+		<view class="bottom-border">电话:{{fTel}}</view>
+		<view class="bottom-border">地址：<text>{{fAddress}}</text></view>
+		<view class="bottom-border">营业时间:<text>{{fTime}}</text></view>
+	</view>
+</view>

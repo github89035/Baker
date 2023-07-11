@@ -1,0 +1,76 @@
+<view class="my-order">
+	<!-- <view class="fixed-btns-box" bindtap="onCartTap">
+		<view class="fiexd-cart {{isShake?'animate':''}}">
+			<image src="../../imgs/icon/cart@top.png"></image>
+			<view wx:if="{{cartTotalCounts>0}}">{{cartTotalCounts}}</view>
+		</view>
+	</view> -->
+	<view class="item-title">
+		<view class="station">
+			<view class='select_box'>
+				<view class='select' catchtap='selectTap'>
+					<text class='select_text' wx-if="{{!hadselect}}">請選擇條件</text>
+					<text class='select_text'  wx:else>{{selectData[index].text}}</text>
+					<image class='select_img {{show&&"select_img_rotate"}}' src='/imgs/icon/arrow@right.png'></image>
+				</view>
+				<!-- 选项框高度控制 没有点击则为0，有点击根据选项确定-->
+				<view class='option_box' style='height:{{show?(selectData.length>5?300:selectData.length*60):0}}rpx;z-index:100;'>
+					<text class='option' style='{{index==selectData.length-1&&"border:0;"}}' wx:for='{{selectData}}' wx:key='this' data-index='{{index}}' data-value='{{item.value}}'   catchtap='optionTap'>{{item.text}}</text>
+				</view>
+			</view>
+			<view class='search'>
+				<view>
+					<input type='text' placeholder='請輸入關鍵字' bindinput='getInput' bindconfirm='confirm' />
+				</view>
+				<view data-keyword="{{keyword}}" data-searchType="{{index}}" ontap="searchOrder" style="width:50rpx;height:50rpx;">
+					<icon type='search' class='icons'></icon>
+				</view>
+			</view>
+		</view>
+	</view>
+	<view class="item-main">
+		<view class="top"></view>
+		<block wx:for="{{orderArr}}">
+			<view class="order-item" ontap="showOrderDetailInfo" data-pCustomUID="{{item.pCustomUID}}" data-pSecurityCode="{{item.pSecurityCode}}">
+				<view class="order-main" ontap="showOrderDetailInfo" data-pCustomUID="{{item.pCustomUID}}" data-pSecurityCode="{{item.pSecurityCode}}">
+					<!-- <view class="item-left">
+						<image src="../../imgs/icon/user@default.png"></image>
+					</view> -->
+					<view class="item-middle">
+						<view>
+							<text>客戶姓名:</text>
+							<text class="order-no-txt" wx:if="{{item.pCustomSex==1}}">{{item.pCustomName}} 先生</text>
+							<text class="order-no-txt" wx:if="{{item.pCustomSex==2}}">{{item.pCustomName}} 女士</text>
+							<!-- <text class="order-no-txt">{{item.pCustomName}}</text> -->
+						</view>
+						<view>
+							<text>家用電話:</text>
+							<text class="order-no-txt">{{item.pCustomHomeNumber}}</text>
+						</view>
+						<view>
+							<text>手機號碼:</text>
+							<text class="order-no-txt">{{item.pCustomPhoneNumber}}</text>
+						</view>
+						<!-- <view>
+							<text>稱呼:</text>
+							<text class="order-no-txt" wx:if="{{item.pCustomSex==1}}">先生</text>
+							<text class="order-no-txt" wx:if="{{item.pCustomSex==2}}">女士</text>
+						</view> -->
+						<!-- <view>
+							<text>年龄:</text>
+							<text class="order-no-txt">{{item.fAge}}</text>
+						</view> -->
+						<view>
+							<text>地址:</text>
+							<text class="order-no-txt">{{item.pCustomAddress}}</text>
+						</view>
+					</view>
+				</view>
+				<!-- <view class="order-bottom" ontap="showOrderDetailInfo" data-pCustomUID="{{item.pCustomUID}}" data-pSecurityCode="{{item.pSecurityCode}}">
+					<text>到店时间:{{item.fVisitDate}}</text>
+				</view> -->
+			</view>
+		</block>
+		<l-icon class="icon" name="add" color="#FF4D40" size="80" bindtap="goToAddCustomerFlow" />
+	</view>
+</view>

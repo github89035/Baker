@@ -1,0 +1,52 @@
+<!--index.wxml-->
+<view class="container-addcus">
+  <view>
+
+    <l-input label="客户姓名" placeholder="请输入客户姓名" />
+    <l-input label="电话" placeholder="请输入密码" />
+    <l-input label="性别" placeholder="请输入性别" />
+    <l-input label="逛店人数" placeholder="请输入逛店人数" />
+    <l-input label="来访时间" placeholder="请输入来访时间" />
+    <l-input label="停留时间" placeholder="请输入停留时间" />
+
+  </view>
+  <view style="margin-top:10rpx;">
+    <l-card type="primary" plaintext="{{true}}" title="意向系列">
+      <view class="content">
+        <l-checkbox-group placement="row" current="{{current}}" bind:linchange="onChangeTap">
+          <l-checkbox shape="circle" wx:for-items="{{items1}}" wx:key="{{item.value}}" value="{{item.value}}" disabled="{{item.disabled}}">
+          </l-checkbox>
+        </l-checkbox-group>
+      </view>
+    </l-card>
+    <l-card type="primary" plaintext="{{true}}" title="欲购家具空间">
+      <view class="content">
+        <l-checkbox-group placement="row" current="{{current}}" bind:linchange="onChangeTap">
+          <l-checkbox shape="circle" wx:for-items="{{items2}}" wx:key="{{item.value}}" value="{{item.value}}" disabled="{{item.disabled}}">
+          </l-checkbox>
+        </l-checkbox-group>
+      </view>
+    </l-card>
+
+    <l-card type="primary" plaintext="{{true}}" title="房屋信息">
+      <view class="content">
+        <l-checkbox-group placement="row" current="{{current}}" bind:linchange="onChangeTap">
+          <l-checkbox shape="circle" wx:for-items="{{items4}}" wx:key="{{item.value}}" value="{{item.value}}" disabled="{{item.disabled}}">
+          </l-checkbox>
+        </l-checkbox-group>
+      </view>
+    </l-card>
+
+    <l-card type="primary" plaintext="{{true}}" title="客户来源">
+      <view class="content">
+        <l-checkbox-group placement="row" current="{{current}}" bind:linchange="onChangeTap">
+          <l-checkbox shape="circle" wx:for-items="{{items5}}" wx:key="{{item.value}}" value="{{item.value}}" disabled="{{item.disabled}}">
+          </l-checkbox>
+        </l-checkbox-group>
+      </view>
+    </l-card>
+  </view>
+  <view>
+    <l-button bg-color="#ab956d">提交</l-button>
+  </view>
+</view>

@@ -1,0 +1,66 @@
+@import "../tpls/base.wxss";
+
+.wrap{
+    width: 90%;
+    margin: 10rpx auto;
+}
+
+.item {
+    display: flex;
+    border-bottom: 1rpx solid #ccc;
+    padding: 20rpx 0;
+}
+
+.item:first-child{
+    border-top: 1rpx solid #ccc;
+}
+
+.item .flex1{
+    flex: 1;
+    display: flex;
+}
+
+.item .flex2{
+    flex: 5;
+    line-height: 2;
+}
+
+.item .flex3{
+    flex: 1.5;
+    display: flex;
+    align-items: center;
+}
+
+.order-sales {
+  background-color: #fff;
+}
+
+.order-sales>view {
+  display: flex;
+  align-items: center;
+}
+
+.total-sale {
+  flex: 1;
+  color: #93312e;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.choose {
+  flex-basis: 240rpx;
+  background-color: hsl(0, 90%, 62%);
+  color: #fff;
+}
+
+.choose:active {
+  background: #84704d;
+}
+
+.choose.disabled {
+  line-height: 150rpx;
+  border-radius: 0;
+  background: hsl(0, 90%, 62%);
+  pointer-events: auto;
+}

@@ -1,0 +1,154 @@
+@import "../tpls/category/category-tpl.wxss";
+
+page{
+    overflow: hidden;
+}
+
+.searchbox {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50px;
+    background-color: #dcdcdc;
+    height: 68rpx;
+    width: 68rpx;
+    color: #999999;
+
+    z-index: 999;
+    position: fixed;
+    top: 100rpx;
+    right: 25rpx;
+  }
+  
+.category-container{
+    /*min-height: 100vh;*/
+  background-color: #FFF;
+  border-top: 1rpx solid #D8D8D8;
+}
+.category-detail-button{
+    height: 100vh;
+}
+.category-box{
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+    flex-direction: row;
+}
+.foods-box{
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    flex-direction: row;
+}
+
+.top-box{
+    z-index: 999;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    border-right:1rpx solid #D8D8D8;
+    min-width: 60px;
+}
+
+.left-box{
+    flex: 1;
+    /* transition: all 500ms ease-in-out; */
+}
+.addRightLine{
+    background-color: white;
+    border-right:1rpx solid #D8D8D8;
+}
+.menu-item{
+    height: 50rpx;
+    padding: 20rpx 0;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size:28rpx;
+    border-left: 6rpx solid #fff;
+}
+.menu-item.selected{
+    color: #FF4D40;
+    border-left-color:#FF4D40;
+}
+
+.right-box{
+    display: flex;
+    flex-direction: column;
+    /* transition: all 500ms ease-in-out; */
+}
+.tanslate0{
+    transform:translate(0,0);
+}
+.tanslate1{
+    transform:translate(0,-100vh);
+}
+.tanslate2{
+    transform:translate(0,-200vh);
+}
+.tanslate3{
+    transform:translate(0,-300vh);
+}
+.tanslate4{
+    transform:translate(0,-400vh);
+}
+.tanslate5{
+    transform:translate(0,-500vh);
+}
+.tanslate6{
+    transform:translate(0,-600vh);
+}
+.tanslate7{
+    transform:translate(0,-700vh);
+}
+.foods-group-box{
+    height: 100vh;
+}
+.fixed-btns-box {
+    z-index: 999;
+    position: fixed;
+    top: 10rpx;
+    right: 10rpx;
+    width: 80rpx;
+  }
+  
+  .fiexd-cart image {
+    height: 64rpx;
+    width: 64rpx;
+  }
+  
+  .fiexd-cart view {
+    font-size: 24rpx;
+    background-color: #FF4D40;
+    color: white;
+    position: absolute;
+    right: 64rpx;
+    top: 0rpx;
+    height: 36rpx;
+    width: 36rpx;
+    line-height: 36rpx;
+    border-radius: 36rpx;
+    text-align: center;
+  }
+  
+  .fiexd-cart.animate {
+    animation: aCartScale 200ms cubic-bezier(.17, .67, .83, .67);
+    animation-fill-mode: backwards;
+  }
+
+.select_img {
+width: 40rpx;
+height: 40rpx;
+display: block;
+transition: transform 0.3s;
+}
+
+.hideView{
+    display: none;
+}
+
+.showView{
+    display: flex;
+}

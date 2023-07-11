@@ -1,0 +1,8 @@
+{
+  "enablePullDownRefresh": false,
+  "usingComponents": {
+    "l-combined-tabs": "/dist/combined-tabs/index",
+    "v-search": "/components/search/index",
+    "l-tabpanel": "/dist/tabpanel/index"
+  }
+}

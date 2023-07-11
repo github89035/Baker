@@ -1,0 +1,211 @@
+{
+  "description": "项目配置文件",
+  "packOptions": {
+    "ignore": [],
+    "include": []
+  },
+  "setting": {
+    "urlCheck": false,
+    "es6": true,
+    "enhance": false,
+    "postcss": true,
+    "preloadBackgroundData": false,
+    "minified": true,
+    "newFeature": false,
+    "coverView": true,
+    "nodeModules": false,
+    "autoAudits": false,
+    "showShadowRootInWxmlPanel": true,
+    "scopeDataCheck": false,
+    "uglifyFileName": false,
+    "checkInvalidKey": true,
+    "checkSiteMap": true,
+    "uploadWithSourceMap": true,
+    "compileHotReLoad": false,
+    "useMultiFrameRuntime": true,
+    "useApiHook": true,
+    "useApiHostProcess": true,
+    "babelSetting": {
+      "ignore": [],
+      "disablePlugins": [],
+      "outputPath": ""
+    },
+    "useIsolateContext": true,
+    "userConfirmedBundleSwitch": false,
+    "packNpmManually": false,
+    "packNpmRelationList": [],
+    "minifyWXSS": true,
+    "disableUseStrict": false,
+    "minifyWXML": true,
+    "showES6CompileOption": false,
+    "useCompilerPlugins": false,
+    "condition": false
+  },
+  "compileType": "miniprogram",
+  "libVersion": "2.23.1",
+  "projectname": "Baker",
+  "cloudfunctionTemplateRoot": "",
+  "simulatorType": "wechat",
+  "simulatorPluginLibVersion": {},
+  "appid": "wxb801ff2de4a9e7c4",
+  "condition": {
+    "miniprogram": {
+      "list": [
+        {
+          "name": "pages/product/product",
+          "pathName": "pages/product/product",
+          "query": "id=11",
+          "scene": null
+        },
+        {
+          "name": "pages/aftersales/aftersales",
+          "pathName": "pages/aftersales/aftersales",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/order/order",
+          "pathName": "pages/order/order",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/category/category",
+          "pathName": "pages/category/category",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/my/my",
+          "pathName": "pages/my/my",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/home/home",
+          "pathName": "pages/home/home",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/signIn/signIn",
+          "pathName": "pages/signIn/signIn",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/cart/cart",
+          "pathName": "pages/cart/cart",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/cart/cart",
+          "pathName": "pages/cart/cart",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/productsgrouplist/productsgrouplist",
+          "pathName": "pages/productsgrouplist/productsgrouplist",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/brand/brand",
+          "pathName": "pages/brand/brand",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/upload/upload",
+          "pathName": "pages/upload/upload",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/appraise/appraise",
+          "pathName": "pages/appraise/appraise",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/storelist/storelist",
+          "pathName": "pages/storelist/storelist",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/culture/culture",
+          "pathName": "pages/culture/culture",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/caselist/caselist",
+          "pathName": "pages/caselist/caselist",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/myorder/myorder",
+          "pathName": "pages/myorder/myorder",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/storelist/storelist",
+          "pathName": "pages/storelist/storelist",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/myorder/myorder",
+          "pathName": "pages/myorder/myorder",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/upload/upload",
+          "pathName": "pages/upload/upload",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/home/home",
+          "pathName": "pages/home/home",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/installorderlist/installorderlist",
+          "pathName": "pages/installorderlist/installorderlist",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/my/my",
+          "pathName": "pages/my/my",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/success/success",
+          "pathName": "pages/success/success",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/designer/designer",
+          "pathName": "pages/designer/designer",
+          "query": "",
+          "scene": null
+        }
+      ]
+    }
+  },
+  "editorSetting": {
+    "tabIndent": "insertSpaces",
+    "tabSize": 2
+  }
+}

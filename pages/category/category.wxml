@@ -1,0 +1,67 @@
+<import src="../tpls/category/category-tpl.wxml" />
+
+<view wx:if="{{!searching}}" class="container category-container">
+
+	<view class="fixed-btns-box" bindtap="onCartTap">
+		<view class="fiexd-cart {{isShake?'animate':''}}">
+			<image src="../../imgs/icon/cart@top.png"></image>
+			<view wx:if="{{cartTotalCounts>0}}">{{cartTotalCounts}}</view>
+		</view>
+	</view>
+
+	<view class="searchbox" bindtap="onSearching">
+		<image style="height: 50%;width: 50%;" src="../../imgs/icon/search.png" />
+	</view>
+
+	<view class="category-box">
+		<view class="top-box">
+			<block wx:for="{{categoryTypeArr}}">
+				<view class="menu-item {{currentMenuIndex==index?'selected':''}}" data-pBrand="{{item.pBrand}}" data-index="{{index}}" bindtap="changeCategory" data-title-name="{{item.pBrandName[langIndex]}}">
+					{{item.pBrandName[langIndex]}}
+				</view>
+			</block>
+			
+			<!-- <view class="menu-item {{currentMenuIndex==3?'selected':''}}" data-pBrand="SKU" data-index="{{3}}" bindtap="changeCategory" data-title-name="SKU">
+				庫存
+			</view>
+				-->
+			<view class="menu-item {{currentMenuIndex==4?'selected':''}}" data-pBrand="store" data-index="{{4}}" bindtap="changeCategory" data-title-name="store">
+				門店商品
+				</view> 
+		</view>
+
+		<view class="foods-box">
+			<view class="left-box {{transClassArr[currentMenuIndex]}}">
+					<view class="foods-group-box">
+						<template is="categorydetail_title" data="{{categoryInfo:categoryInfo0,currentTypeIndex,langIndex}}" />
+					</view>
+					<view class="foods-group-box">
+						<template is="categorydetail_title" data="{{categoryInfo:categoryInfo1,currentTypeIndex,langIndex}}" />
+					</view>
+					<view class="foods-group-box">
+						<template is="categorydetail_title" data="{{categoryInfo:categoryInfo2,currentTypeIndex,langIndex}}" />
+					</view>
+					<view class="foods-group-box">
+						<template is="categorydetail_title" data="{{categoryInfo:categoryInfo3,currentTypeIndex,langIndex}}" />
+					</view>
+					<view class="foods-group-box">
+						<template is="categorydetail_title" data="{{categoryInfo:categoryInfo4,currentTypeIndex,langIndex}}" />
+					</view>
+					<view class="foods-group-box">
+						<template is="categorydetail_title" data="{{categoryInfo:categoryInfo5,currentTypeIndex,langIndex}}" />
+					</view>
+					<view class="foods-group-box">
+						<template is="categorydetail_title" data="{{categoryInfo:categoryInfo6,currentTypeIndex,langIndex}}" />
+					</view>
+					<view class="foods-group-box">
+						<template is="categorydetail_title" data="{{categoryInfo:categoryInfo7,currentTypeIndex,langIndex}}" />
+					</view>
+			</view>
+		</view>
+
+	</view>
+	<loading hidden="{{loadingHidden}}">
+    {{language.loading}}
+  </loading>
+</view>
+<v-search bind:cancle="onCancle" wx:if="{{searching}}" />

@@ -1,0 +1,43 @@
+<import src="../tpls/store/store-tpl.wxml" />
+
+<!-- 一级分类 -->
+<view class="container category-container" bindtap="hide_sec_category">
+	<view class="fixed-btns-box" bindtap="onCartTap">
+		<view class="fiexd-cart {{isShake?'animate':''}}">
+			<image src="../../imgs/icon/cart@top.png"></image>
+			<view wx:if="{{cartTotalCounts>0}}">{{cartTotalCounts}}</view>
+		</view>
+	</view>
+	
+	<view class="category-box">
+		<view class="left-box">
+			<block wx:for="{{categoryTypeArr}}">
+				<view class="menu-item {{currentMenuIndex==index?'selected':''}}" data-fCateNO="{{item.fCateNO}}" data-index="{{index}}" catchtap="changeCategory" data-title-name="{{item.fCateName}}">
+					{{item.fCateName}}
+				</view>
+			</block>
+		</view>
+
+		<!-- 二级分类 -->
+		<view class="sec_category_wrap {{ show_sec_category?'show':''}}">
+			<view class="sec_categor">
+				<block wx:for="{{categoryTypeArr[currentMenuIndex].torgCity}}">
+
+					<view class="sec_category_item {{select_index==index?'selected':''}}" data-fCateNO="{{categoryTypeArr[currentMenuIndex].fCateNO}}" data-id="{{item.id}}" data-index="{{index}}" data-fCity="{{item.fCity}}" bindtap="click_sub_category">
+						{{item.fCity}}
+					</view>
+				</block>
+			</view>
+		</view>
+
+		<view class="mask {{ show_sec_category?'show':''}}"></view>
+		<view class="right-box {{transClass?'translate0':''}}">
+			<view class="foods-type-box">
+				<template is="store" data="{{categoryInfo:cur_categoryInfo}}" />
+			</view>
+		</view>
+	</view>
+	<!-- <loading hidden="{{loadingHidden}}">
+    加载中...
+  </loading> -->
+</view>

@@ -1,0 +1,41 @@
+<view wx:if="{{!searching}}" class="container my-container">
+	<view class="fixed-btns-box" bindtap="onCartTap">
+		<view class="fiexd-cart {{isShake?'animate':''}}">
+			<image src="../../imgs/icon/cart@top.png"></image>
+			<view wx:if="{{cartTotalCounts>0}}">{{cartTotalCounts}}</view>
+		</view>
+	</view>
+	
+	<view class="searchbox" bindtap="onSearching">
+		<image style="height: 50%;width: 50%;" src="../../imgs/icon/search.png" />
+	</view>
+
+	<view class="my-header">
+		<image src="{{userInfo.avatarUrl}}"></image>
+		<text class="name">{{fUsrName}}</text>
+	</view>
+	<view class="my-grid">
+		<view class="list">
+			<l-list wx:if="{{(FunctionAuth&2)==2}}" title="{{language.lang_my_Order}}" icon="order" bindtap="goToMyOrder" />
+			<l-list wx:if="{{(FunctionAuth&4)==4}}" title="{{language.lang_my_CustomerFlowList}}" icon="address" bindtap="goToCustomerFlowList" />
+			<l-list title="購物車數據" icon="cart" bindtap="goToMyCartList" />
+			<!-- <l-list wx:if="{{(FunctionAuth&8)==8}}" title="售後服務單" icon="history" bindtap="goToAfterSalesList" />
+			<l-list wx:if="{{(FunctionAuth&16)==16}}" title="安裝服務單" icon="notification" bindtap="gotoInstallOrderList" /> -->
+			<!-- <l-list title="销售数据" icon="cart" /> -->
+		</view>
+		
+		<view class="langArea">
+			<picker mode="selector" range="{{languages}}" value="{{langIndex}}" bindchange="changeLanguage">
+			<view>
+				<text>{{language.language}} ：</text>
+				<text>{{languages[langIndex]}}</text>
+			</view>
+			</picker>
+		</view>
+
+		<view wx:if="{{(FunctionAuth&536870912)==536870912}}" class="showVersion">
+				<text>Version ："{{appversion}}"</text>
+		</view>
+	</view>
+</view>
+<v-search bind:cancle="onCancle" wx:if="{{searching}}" />

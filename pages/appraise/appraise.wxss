@@ -1,0 +1,18 @@
+/* pages/appraise.wxss */
+.appraise{
+}
+.phone{
+  width: 80%;
+}
+.star{
+  display: block;
+  margin-left:150rpx;
+}
+.comment{
+  margin-left: 20rpx;
+  margin-top: 20rpx;
+}
+.submit{
+    margin-left:300rpx;
+
+}

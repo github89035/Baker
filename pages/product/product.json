@@ -1,0 +1,8 @@
+{
+    "enablePullDownRefresh": false,
+    "usingComponents": {
+      "l-radio-group": "/dist/radio-group/index",
+      "v-search": "/components/search/index",
+      "l-radio": "/dist/radio/index"
+    }
+}

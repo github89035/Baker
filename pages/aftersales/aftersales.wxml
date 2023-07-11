@@ -1,0 +1,136 @@
+<view class="container">
+	<form bindsubmit="afterSalesOrderFormSubmit">
+		<view class="input-box">
+			<input hidden="{{true}}" name='fOrdID' disabled="{{true}}" class="radio input" placeholder="订单ID" value="{{fOrdID}}"></input>
+			<input hidden="{{true}}" name='fOrdReturnID' disabled="{{true}}" class="radio input" placeholder="售后单ID" value="{{fOrdReturnID}}"></input>
+
+			<block wx:if="{{from=='list'}}">
+				<view class="row input-text">
+					<label class="font-color">售后服务单号:</label>
+					<input disabled="{{true}}" class="radio input font-color" placeholder="售后服务单号" value="{{fOrdReturnNo}}"></input>
+				</view>
+			</block>
+			<view class="row input-text">
+				<label class="font-color">对应订单号:</label>
+				<input name='orderNo' disabled="{{true}}" class="radio input font-color" placeholder="订单号" value="{{orderNo}}"></input>
+			</view>
+			<view class="row input-text">
+				<label class="font-color">客户姓名:</label>
+				<input name='customerName' disabled="{{true}}" class="radio input font-color" placeholder="客户姓名" value="{{customerName}}"></input>
+			</view>
+			<view class="row input-text">
+				<label class="font-color">电话:</label>
+				<block wx:if="{{from=='order'}}">
+					<input name='mobile' disabled="{{true}}" class="radio input font-color" placeholder="电话" value="{{mobile}}"></input>
+				</block>
+				<block wx:if="{{from=='list'}}">
+					<input name='mobile' disabled="{{true}}" class="radio input font-color" placeholder="电话" value="{{fContacttel}}"></input>
+				</block>
+			</view>
+			<view class="row input-text">
+				<label class="font-color">退货金额:</label>
+				<input name='fReturnAmount' disabled="{{true}}" class="radio input font-color" placeholder="退货金额" value="{{fReturnAmount}}"></input>
+			</view>
+			<view class="row input-text">
+				<label>违约金:</label>
+				<input name='fDamages' class="radio input" placeholder="违约金" value="{{fDamages}}"></input>
+			</view>
+			<view class="row input-text">
+				<label>应付金额:</label>
+				<input name='fPayAmount' class="radio input" placeholder="应付金额" value="{{fPayAmount}}"></input>
+			</view>
+			<view>
+				<view class="row">
+					<label>退货方式:</label>
+					<radio-group name='fReturnType' class="radio-wrap" bindchange="onChangeTap">
+						<block wx:if="{{fReturnType==''}}">
+							<block wx:for="{{returnTypeItem}}">
+								<radio class="radio" value="{{item.value}}">
+									<text>{{item.text}}</text>
+								</radio>
+							</block>
+						</block>
+						<block wx:else>
+							<block wx:for="{{returnTypeItem}}">
+								<block wx:if="{{fReturnType==item.value}}">
+									<radio disabled="{{revise}}" class="radio" value="{{item.value}}" checked="checked">
+										<text>{{item.text}}</text>
+									</radio>
+								</block>
+								<block wx:else>
+									<radio disabled="{{revise}}" class="radio" value="{{item.value}}">
+										<text>{{item.text}}</text>
+									</radio>
+								</block>
+							</block>
+						</block>
+					</radio-group>
+				</view>
+			</view>
+			<view>
+				<view class="row">
+					<label>退货类别:</label>
+					<radio-group name='fReturnCate' class="radio-wrap" bindchange="onChangeTap">
+						<block wx:if="{{fReturnCate==''}}">
+							<block wx:for="{{returnCateItem}}">
+								<radio class="radio" value="{{item.value}}">
+									<text>{{item.text}}</text>
+								</radio>
+							</block>
+						</block>
+						<block wx:else>
+							<block wx:for="{{returnCateItem}}">
+								<block wx:if="{{fReturnCate==item.value}}">
+									<radio class="radio" value="{{item.value}}" checked="checked">
+										<text>{{item.text}}</text>
+									</radio>
+								</block>
+								<block wx:else>
+									<radio class="radio" value="{{item.value}}">
+										<text>{{item.text}}</text>
+									</radio>
+								</block>
+							</block>
+						</block>
+					</radio-group>
+				</view>
+			</view>
+		</view>
+
+		<block>
+			<view class="card-box">
+				<l-card class="card" style="width:100%" type="primary" image="{{fImageUrl}}" title="{{fFgName}}">
+					<!-- 此处为content -->
+					<view class="content">料号：{{fFgNo}}</view>
+					<view class="content">数量：{{fReturnQty}}</view>
+					<view class="content " wx:if="{{fSupplysourse}}==1">供货来源：供应商</view>
+					<view class="content " wx:else="{{fSupplysourse}}==2">供货来源：门店仓</view>
+				</l-card>
+				<view class="text">异常图片：
+					<view class="fCustImageUrls-box">
+						<block wx:for="{{detialfCustImageUrls}}">
+							<view ontap='showPic' data-picUrl="{{item}}">
+								<image class="pic" src="{{item}}"></image>
+								<!-- <image class="del" data-picSrc="{{item}}" catchtap="delPic" src="../../imgs/icon/delPic.png"></image> -->
+							</view>
+
+						</block>
+					</view>
+					<l-image-picker size-type="compressed" count="9" size-type="original" max-image-size="32000000" urls="['图片1.jpg','图片2.jpg','图片3.jpg']" bind:linchange="addPicure" />
+					<input hidden="{{true}}" maxlength="1000" name="fCustImageUrls" value="{{fCustImageUrls}}"></input>
+					<button class="pay disabled" ontap="upLoadPic">上传</button>
+				</view>
+			</view>
+			<view class="comment">
+				<textarea name="fReturnMsg" class="textarea" placeholder="退货原因或问题描述" value="{{fReturnMsg}}"></textarea>
+			</view>
+		</block>
+
+		<button wx:if="{{from=='order'}}" class="pay disabled" form-type='submit' data-type='add'>提交</button>
+		<button wx:if="{{from=='list'}}" class="pay disabled" form-type='submit' data-type='revise'>提交</button>
+
+	</form>
+	<l-popup show="{{showpopup}}" content-align="center" l-class="popcolor">
+		<image bindload="imageLoad" mode="widthFix" src="{{picurl}}"></image>
+	</l-popup>
+</view>

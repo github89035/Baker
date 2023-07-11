@@ -1,0 +1,9 @@
+{
+  "component":true,
+  "usingComponents": {
+        "l-popup": "/dist/popup/index",
+        "v-search": "/components/search/index",
+        "l-icon": "/dist/icon/index"
+      }
+    
+}

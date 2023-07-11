@@ -1,0 +1,487 @@
+<import src="../tpls/products/products-tpl.wxml" />
+
+<view hidden="{{!bFinishBtn}}" class="OptionBox">
+  <template is="Finish" data="{{Item_Finishes:product.Item_Finishes,nFinishIndex:product.nFinishIndex,FinishIndex,FinishChileIndex}}" />
+</view>
+
+<view hidden="{{!bFinish2Btn}}" class="OptionBox">
+  <template is="Finish2" data="{{Item_Finishes:product.Item_Finishes2,nFinishIndex:product.nFinish2Index,Finish2Index,Finish2ChileIndex}}" />
+</view>
+
+<view hidden="{{!bStyleBtn}}" class="OptionBox">
+  <template is="FLTexture" data="{{Item_StyleS:product.Item_StyleS,nStyleIndex:product.nStyleIndex,nStyle_No_Index:product.Item_StyleS[product.nStyleIndex].Style_No_Index,StyleIndex,Style_No_Index,StyleChileIndex}}" />
+</view>
+
+<view hidden="{{(!bPillowBtn)}}" class="PillowBox">
+  <template is="Pillow" wx:if="{{!bFLShow}}" data="{{m_PillowS:product.m_PillowS,Item_StyleS:product.Item_StyleS}}" />
+  <template is="PillowFL" wx:if="{{bFLShow}}" data="{{Item_StyleS:product.Item_StyleS,m_PillowS:product.m_PillowS,nowPillowNo,tmpPillowIndex,tmpPillowTypeNo,tmpPillowChileNo}}" />
+</view>
+
+<view hidden="{{(!bInventory)}}" class="InventoryBox">
+  <template is="Inventory" data="{{m_SKUS:product.m_SKUS,m_StoreProductS:product.m_StoreProductS,InventoryIndex,InventoryArray,PriceListRate:product.PriceListRate,Rate:product.Rate}}" />
+</view>
+
+<view wx:if="{{!searching}}" class="container detail-container" hidden="{{bFinishBtn||bStyleBtn||bPillowBtn||bInventory}}">
+
+  <view class="detail-header-box">
+  
+    <view class="fixed-btns-box" bindtap="onCartTap">
+      <view class="fiexd-cart {{isShake?'animate':''}}">
+        <image src="../../imgs/icon/cart@top.png"></image>
+			<view wx:if="{{cartTotalCounts>0}}">{{cartTotalCounts}}</view>
+      </view>
+    </view>
+
+    <view class="searchbox" bindtap="onSearching">
+      <image style="height: 50%;width: 50%;" src="../../imgs/icon/search.png" />
+    </view>
+
+    <view class="inventorybox" bindtap="onInventory" hidden="{{!product.bInventory}}">
+      <text>庫</text>
+    </view>
+
+    <!-- <view class="homebox" bindtap="onHomeBtn">
+      <image style="height: 70%;width: 70%;" src="../../imgs/icon/home.png" />
+    </view> -->
+
+    <scroll-view class="detail-topic-img" scroll-x scroll-with-animation
+    bindtouchstart="touchStart"
+    bindtouchend="touchEnd">
+      <view wx:for="{{product.tfgImage}}" class="detail-topic-img" id="card_{{index}}" hidden="{{ImageIndex!=index}}">
+          <image hidden="{{ImageIndex!=index}}" bindload="onImageLoaded" bindtap="previewImg" src="{{item.fImageUrl}}" data-index="{{index}}" mode="aspectFit"/>
+      </view>
+    </scroll-view>
+
+    <!-- <view class="detail-topic-img">
+      <block wx:for="{{product.tfgImage}}" wx:for-item="ImageInfo">
+        <image hidden="{{ImageIndex!=index}}" bindload="onImageLoaded" bindtap="previewImg" src="{{ImageInfo.fImageUrl}}" data-index="{{index}}" mode="aspectFit"/>
+      </block>
+    </view> -->
+    
+    <view class="imageArea" hidden="{{product.tfgImage.length<=1}}">
+      <view class="arrowarea">
+        <image class="arrow_img" src="../../imgs/icon/arrow@left.png" hidden="{{arrowLeftShow}}"></image>
+      </view>
+
+      <view class="tabs-imagebox">
+        <scroll-view class="tabs-imagescroll" scroll-x="true" enable-flex="{{product.tfgImage.length<=5?'true':''}}" bindscrolltoupper="onToupper" bindscrolltolower="onTolower" bindscroll="onImageScroll">
+          <block wx:for="{{product.tfgImage}}" wx:for-item="ImageInfo">
+            <view class="tabs-image {{ImageIndex==index?'selected':''}}" bindtap="onImagesItemTap" data-index="{{index}}">
+              <image src="{{ImageInfo.fImageUrl}}" data-index="{{index}}" style="max-height: 80%;" mode="heightFix" />
+            </view>
+          </block>
+        </scroll-view>
+      </view>
+      
+      <view class="arrowarea">
+        <image class="arrow_img" src="../../imgs/icon/arrow@right.png" style="transform: rotate(270deg);" hidden="{{arrowRightShow}}"></image>
+      </view>
+    </view>
+    
+    <!-- <view class="detail-topic-img"> -->
+      <!-- <image src="{{product.fImageUrl}}" style="width:750rpx;height:1446"></image> -->
+      <!-- <image src="{{product.tfgImage[0].fImageUrl}}" mode="widthFix"></image>
+    </view> -->
+
+    <view class="cart-box2 footer-account-box1" style="bottom: 90rpx">
+      <view class="product-counts2">
+        <text class="DefaultText">{{language.lang_product_ListPrice}}：</text>
+        <text class="PriceText">NT${{func.ToPriceStr(func.ToSale(func.ToRound(product.List_Price * (1 + product.PriceListRate) * product.Rate),product.pSale))}}</text>
+      </view>
+      <!-- 
+      <view class="middle-border"></view>
+      <view class="add-cart-btn2">
+        <text class="DefaultText">運費+組裝費：NT${{product.bShip?(func.ToPriceStr(func.ToRound(func.ToRound(product.List_Price * (1 + product.PriceListRate) * (1 + product.Rate))*0.2))):'0'}}</text>
+        <text class="DefaultText">設計服務費：NT${{product.bDesign?(func.ToPriceStr(func.ToRound(product.List_Price*0.05))):'0'}}</text>
+      </view>
+       -->
+    </view>
+
+    <view class="cart-box footer-account-box1">
+      <view class="product-counts">
+        <picker class="{{product.fStkQty==0?'disabled':''}}" bindchange="bindPickerChange" value="{{index0}}" range="{{countsArray}}">
+          <!--因为picker对flex支持不好，所以加了一层view-->
+          <view>
+            <text class="counts-tips">{{language.common_counts}}</text>
+            <text class="counts-data">{{productCounts}}</text>
+            <image class="counts-icon" src="../../imgs/icon/arrow@down.png"></image>
+          </view>
+        </picker>
+      </view>
+      <view class="middle-border"></view>
+      <view wx:if="{{!bCart && product.Section1!='Store'}}" class="add-cart-btn" bindtap="onAddingToCartTap">
+        <text>{{language.lang_product_addcart}}</text>
+        <image class="cart-icon" src="../../imgs/icon/cart.png"></image>
+        <image id="small-top-img" class="small-top-img {{isFly?'animate':''}}" src="{{product.tfgImage[0].fImageUrl}}" mode="aspectFill" style="{{translateStyle}}"></image>
+      </view>
+      <view wx:elif="{{bCart}}" class="add-cart-btn" bindtap="onEditToCartTap">
+        <text>編輯確認</text>
+      </view>
+      <view wx:else class="add-cart-btn">
+        <text>僅有庫存</text>
+      </view>
+    </view>
+
+    <view class="basic-info-box">
+
+
+      <view class="nameAndthreed">
+        <view class="threed" bindtap="onKuJiaLe" style="" hidden="{{true}}">
+          <image src="../../imgs/icon/3d.png"></image>
+        </view>
+        <view class="name">{{product.Product_Name}}</view>
+      </view>
+      <view class="name">NO. {{product.Item_No_Prefix}}</view>
+      <view wx:if="{{product.pSizeInch != ''}}" class="name">尺寸：{{product.pSize}}</view>
+      <!-- <view class="name">{{language.lang_product_ListPrice}}：${{product.List_Price}}</view> -->
+
+      <!-- <text space="nbsp" class="name" wx:if="{{product.fStkQty>=0||fYPStkQty>=0}}">供應商庫存：{{product.fStkQty}}        門店庫存：{{product.fYPStkQty}}</text>
+      <text wx:else class="stock no">缺貨</text> -->
+
+      <!-- <view class="row input-text">
+        <label>定制信息：</label>
+      </view>  
+
+      <view class="row input-text">
+          <label >finish：</label>
+          <input name='finish' class="radio input" placeholder=""></input>
+      </view>  
+      <view class="row input-text">
+          <label >finish计价：</label>
+          <input name='finishprice' class="radio input" placeholder=""></input>
+      </view>     
+      <view class="row input-text">
+          <label >Fabric/Trim：</label>
+          <input name='finish' class="radio input" placeholder=""></input>
+      </view>   
+      <view class="row input-text">
+          <label >Fabric/Trim计价：</label>
+          <input name='finishprice' class="radio input" placeholder=""></input>
+      </view>        
+      <view class="row input-text">
+          <label >GR：</label>
+          <input name='finish' class="radio input" placeholder=""></input>
+      </view>
+      <view class="row input-text">
+          <label >GR计价：</label>
+          <input name='finishprice' class="radio input" placeholder=""></input>
+      </view>     
+      <view class="row input-text">
+          <label >合计：</label>
+          <input name='finishprice' class="radio input" placeholder=""></input>
+      </view>      -->
+      <!-- <view space="nbsp" class="name" wx:if="{{product.fStkQty>=0||fYPStkQty>=0}}">供应商库存：{{product.fStkQty}}    门店库存：{{product.fYPStkQty}}</view>
+			<view class="stock no" wx:else>缺货</view> -->
+    </view>
+
+  </view>
+
+  <view wx:if="{{product.bSizeRange}}" class="SilderBox">
+      <text class="Sildertitle">尺寸：</text>
+      <view class="SilderArea">
+          <slider bindchange="OnSizeChange" min="{{product.fSizeMin}}" max="{{product.fSizeMax}}" value="{{product.fSetSize}}" step="0.1" show-value/>
+      </view>
+  </view>
+
+  <view class="style-box" hidden="{{product.Item_Finishes.length<=1 || product.Item_Finishes == null}}">
+    <view style="margin-left:20px;margin-right:20px;">
+      <button class="btn" bindtap="onFinishTextureBtn">選木</button>
+    </view>
+    <view style="display: grid; align-items: center;">
+      <text style="margin-right:10rpx">材質：{{product.Item_Finishes[FinishIndex].pFinishName}}</text>
+      <text style="margin-right:10rpx" hidden="{{product.Item_Finishes[FinishIndex].m_Finish_ChileS.length<=0}}">料名：{{product.Item_Finishes[FinishIndex].m_Finish_ChileS[FinishChileIndex].pFinishChileName}}</text>
+    </view>
+  </view>
+
+  <view class="style-box" hidden="{{product.Item_Finishes2.length==0 || product.Item_Finishes2 == null}}">
+    <view style="margin-left:20px;margin-right:20px;">
+      <button class="btn" bindtap="onFinish2TextureBtn">金工</button>
+    </view>
+    <view style="display: grid; align-items: center;">
+      <text wx:if="{{product.Item_Finishes2[Finish2Index].pFinishName == 'Base'}}" style="margin-right:10rpx">材質：{{product.Item_Finishes2[Finish2Index].pFinishName}}</text>
+      <text style="margin-right:10rpx" hidden="{{product.Item_Finishes2[Finish2Index].m_Finish_ChileS.length<=0}}">料名：{{product.Item_Finishes2[Finish2Index].m_Finish_ChileS[Finish2ChileIndex].pFinishChileName}}</text>
+    </view>
+  </view>
+
+  <view class="style-box" hidden="{{product.Item_StyleS.length<=0 || product.Item_StyleS == null}}">
+    <view style="margin-left:20px;margin-right:20px;">
+      <button class="btn" bindtap="onStyleChangeBtn">選皮布</button>
+    </view>
+    <view style="display: grid; align-items: center;">
+      <text style="margin-right:10rpx">材質：{{product.Item_StyleS[StyleIndex].StyleType}}</text>
+      <text style="margin-right:10rpx">等級：{{product.Item_StyleS[StyleIndex].Item_Style_NoS[Style_No_Index].pLevel}}</text>
+      <text style="margin-right:10rpx">料號：{{product.Item_StyleS[StyleIndex].Item_Style_NoS[Style_No_Index].m_StyleChileS[StyleChileIndex].pStyleChileName}}</text>
+    </view>
+  </view>
+
+  <view wx:if="{{product.pSectionType=='Bespoke'}}" class="Item-OptionS">
+      <block wx:for="{{product.Item_OptionS}}" wx:for-item="aOptionType" wx:for-index="OptionIndex">
+        <view class="Item-Option">
+          <text>{{aOptionType.Option_Type}}</text>
+          <checkbox-group bindchange="OptionChange"  data-Option_Type="{{aOptionType.Option_Type}}">
+            <block wx:for="{{aOptionType.m_Option_Chiles}}" wx:for-item="aOption" wx:for-index="TypeIndex">
+              <view style="display: flex;align-items: center;">
+                  <checkbox class="Option-Type" value="{{OptionIndex * 10000 + TypeIndex * 100}}" checked="{{aOption.bCheck || aOption.bAlwaysCheck}}">{{aOption.pOptionName}}</checkbox>
+
+                  <picker wx:if="{{aOption.bPicker}}" class="style-counts" bindchange="bindPickerChange_TypeObj" data-index="{{OptionIndex * 10000 + TypeIndex * 100}}" value="{{aOption.nChile}}" range="{{aOption.m_Option_Chiles}}" range-key="pChileName" >
+                    <view style="display: flex; align-items: center;">
+                      <text class="counts-tips">｜</text>
+                      <text class="counts-data">{{aOption.m_Option_Chiles[aOption.nChile].pChileName}}</text>
+                      <image class="counts-icon" src="../../imgs/icon/arrow@right.png"></image>
+                    </view>
+                  </picker>
+              </view>
+            </block>
+          </checkbox-group>
+        </view>
+      </block>
+  </view>
+  <view wx:else class="Item-OptionS">
+      <block wx:for="{{product.Item_OptionS}}" wx:for-item="aOptionType" wx:for-index="OptionIndex">
+        <view class="Item-Option">
+          <text>{{aOptionType.Option_Type}}</text>
+          <checkbox-group wx:if="{{aOptionType.Option_Type == 'Option'}}" bindchange="OptionChange"  data-Option_Type="{{aOptionType.Option_Type}}">
+            <block wx:for="{{aOptionType.m_Option_Chiles}}" wx:for-item="aOption" wx:for-index="TypeIndex">
+              <view style="display: flex;align-items: center;">
+                  <checkbox class="Option-Type" value="{{OptionIndex * 10000 + TypeIndex * 100}}" checked="{{aOption.bCheck}}">{{aOption.bPicker?aOption.pOptionName:aOption.m_Option_Chiles[aOption.nChile].pChileName}}</checkbox>
+
+                  <picker wx:if="{{aOption.bPicker}}" class="style-counts" bindchange="bindPickerChange_TypeObj" data-index="{{OptionIndex * 10000 + TypeIndex * 100}}" value="{{aOption.nChile}}" range="{{aOption.m_Option_Chiles}}" range-key="pChileName" >
+                    <view style="display: flex; align-items: center;">
+                      <text class="counts-tips">｜</text>
+                      <text class="counts-data">{{aOption.m_Option_Chiles[aOption.nChile].pChileName}}</text>
+                      <image class="counts-icon" src="../../imgs/icon/arrow@right.png"></image>
+                    </view>
+                  </picker>
+              </view>
+            </block>
+          </checkbox-group>
+          <radio-group wx:elif="{{aOptionType.Option_Type == 'Seat Cushion' || aOptionType.Option_Type == 'Back Pillow' || aOptionType.Option_Type == 'Throw Pillow'}}" bindchange="OptionChange" data-Option_Type="{{aOptionType.Option_Type}}">
+            <block wx:for="{{aOptionType.m_Option_Chiles}}" wx:for-item="aOption" wx:for-index="TypeIndex">
+              <view style="display: flex;align-items: center;">
+                <checkbox class="Option-radio" value="{{OptionIndex * 10000 + TypeIndex * 100}}" checked="{{aOption.bCheck}}">{{aOption.bPicker?aOption.pOptionName:aOption.m_Option_Chiles[aOption.nChile].pChileName}}</checkbox>
+              </view>
+            </block>
+          </radio-group>
+          <checkbox-group wx:else="" bindchange="OptionChange"  data-Option_Type="{{aOptionType.Option_Type}}">
+            <block wx:for="{{aOptionType.m_Option_Chiles}}" wx:for-item="aOption" wx:for-index="TypeIndex">
+              <view style="display: flex;align-items: center;">
+                  <checkbox class="Option-Type" value="{{OptionIndex * 10000 + TypeIndex * 100}}" checked="{{aOption.bCheck || aOption.bAlwaysCheck}}">{{aOption.bPicker?aOption.pOptionName:aOption.m_Option_Chiles[aOption.nChile].pChileName}}</checkbox>
+
+                  <picker wx:if="{{aOption.bPicker}}" class="style-counts" bindchange="bindPickerChange_TypeObj" data-index="{{OptionIndex * 10000 + TypeIndex * 100}}" value="{{aOption.nChile}}" range="{{aOption.m_Option_Chiles}}" range-key="pChileName" >
+                    <view style="display: flex; align-items: center;">
+                      <text class="counts-tips">｜</text>
+                      <text class="counts-data">{{aOption.m_Option_Chiles[aOption.nChile].pChileName}}</text>
+                      <image class="counts-icon" src="../../imgs/icon/arrow@right.png"></image>
+                    </view>
+                  </picker>
+              </view>
+            </block>
+          </checkbox-group>
+        </view>
+      </block>
+  </view>
+
+  <view wx:if="{{product.m_PillowS.length>0}}" class="PillowArea">
+    <button class="btn" bindtap="onPillowChange">Pillow客制化</button>
+  </view>
+
+  <view class="PriceArea">
+    <text style="width:33%;text-align: center;">其他費用</text>
+    <checkbox bindtap="bindCheckShip" checked="{{product.bShip}}" style="width:33%;">運費+組裝費</checkbox>
+    <!-- <checkbox bindtap="bindCheckDesign" checked="{{product.bDesign}}" style="text-align: center;width:33%;">設計服務費</checkbox> -->
+  </view>
+
+  <view class="detail-bottom-box">
+    <!-- <view class="tabs-box">
+      <block wx:for="{{['產品參數']}}">
+        <view class="tabs-item {{currentTabsIndex==index?'selected':''}}" bindtap="onTabsItemTap" data-index="{{index}}">
+          {{item}}
+        </view>
+      </block>
+    </view> -->
+    <view class="product-detail-box">
+
+      <!-- <view class="product-detail-imgs" hidden="{{currentTabsIndex!=1}}"> -->
+        <!-- <button bindtap="onKuJiaLe" style="background:#B42F2D;color:white">查看酷家乐3D效果</button> -->
+        <!-- <block wx:for="{{product.tfgImage}}">
+          <image src="{{item.fDescImageUrl}}" mode="aspectFit"></image> -->
+          <!-- <image src="{{item.fDescImageUrl}}" style="width:1500rpx;height:1446rpx"></image> -->
+        <!-- </block> -->
+        <!-- <view class="properties-item">
+          <view class="properties-name">{{product.Narrative_Description}}</view>
+        </view>
+      </view> -->
+
+      <view class="product-detail-properties">
+        <!-- 詳細尺寸 -->
+        <view class="properties-item">
+          <view class="properties-name">{{language.lang_product_itemsize}}</view>
+          <view class="properties-detail {{product.Width==0?'hideView':''}}">
+            <view class="properties-info inforight">W </view>
+            <!-- <view class="properties-info infomid">{{product.Width}}in</view> -->
+            <view wx:if="{{product.pSizeInch == ''}}" class="properties-info infoleft">{{product.Width_Metric}}cm</view>
+            <view wx:else class="properties-info infoleft">{{product.fSetSize}}cm</view>
+          </view>
+          <view class="properties-detail {{product.Depth==0?'hideView':''}}">
+            <view class="properties-info inforight">D </view>
+            <!-- <view class="properties-info infomid">{{product.Depth}}in</view> -->
+            <view class="properties-info infoleft">{{product.Depth_Metric}}cm</view>
+          </view>
+          <view class="properties-detail {{product.Height==0?'hideView':''}}">
+            <view class="properties-info inforight">H </view>
+            <!-- <view class="properties-info infomid">{{product.Height}}in</view> -->
+            <view class="properties-info infoleft">{{product.Height_Metric}}cm</view>
+          </view>
+          <view class="properties-detail {{(product.Width>0||product.Depth>0||product.Height>0)?'':'hideView'}}"> </view>
+          <view class="properties-detail {{product.Width_Inside==0?'hideView':''}}">
+            <view class="properties-info inforight">WI </view>
+            <!-- <view class="properties-info infomid">{{product.Width_Inside}}in</view> -->
+            <view class="properties-info infoleft">{{product.Width_Inside_Metric}}cm</view>
+          </view>
+          <view class="properties-detail {{product.Depth_Inside==0?'hideView':''}}">
+            <view class="properties-info inforight">DI </view>
+            <!-- <view class="properties-info infomid">{{product.Depth_Inside}}in</view> -->
+            <view class="properties-info infoleft">{{product.Depth_Inside_Metric}}cm</view>
+          </view>
+          <view class="properties-detail {{product.Arm_Height==0?'hideView':''}}">
+            <view class="properties-info inforight">AH </view>
+            <!-- <view class="properties-info infomid">{{product.Arm_Height}}in</view> -->
+            <view class="properties-info infoleft">{{product.Arm_Height_Metric}}cm</view>
+          </view>
+          <view class="properties-detail {{product.Seat_Height==0?'hideView':''}}">
+            <view class="properties-info inforight">SH </view>
+            <!-- <view class="properties-info infomid">{{product.Seat_Height}}in</view> -->
+            <view class="properties-info infoleft">{{product.Seat_Height_Metric}}cm</view>
+          </view>
+          <view class="properties-detail {{product.Diameter==0?'hideView':''}}">
+            <view class="properties-info inforight">DIA </view>
+            <!-- <view class="properties-info infomid">{{product.Diameter}}in</view> -->
+            <view class="properties-info infoleft">{{product.Diameter_Metric}}cm</view>
+          </view>
+          <!-- <view class="properties-detail {{(product.Width_Inside>0||product.Depth_Inside>0||product.Arm_Height>0||product.Seat_Height>0||product.Diameter>0)?'':'hideView'}}"> </view>
+          <view class="properties-detail {{product.COM_Requirements==0?'hideView':''}}">
+            <view class="properties-info inforight">COM </view>
+            <view class="properties-info infomid">{{product.COM_Requirements}}yd</view>
+            <view class="properties-info infoleft">{{product.COM_Requirements_Metric}}m</view>
+          </view>
+          <view class="properties-detail {{product.COL_Requirements==0?'hideView':''}}">
+            <view class="properties-info inforight">COL </view>
+            <view class="properties-info infomid">{{product.COL_Requirements}}sq ft</view>
+            <view class="properties-info infoleft">{{product.COL_Requirements_Metric}}m</view>
+          </view> -->
+        </view>
+        <!-- 選項和功能 -->
+        <view class="properties-TextArea addLine-top">
+          <view class="properties-name">{{language.lang_product_iteminfo}}</view>
+          <view class="properties-Textdetail {{product.Bullet01==''?'hideView':''}}">
+            <view class="properties-Marker">‧</view>
+            <view class="properties-Text">{{product.Bullet01}}</view>
+          </view>
+          <view class="properties-Textdetail {{product.Bullet02==''?'hideView':''}}">
+            <view class="properties-Marker">‧ </view>
+            <view class="properties-Text">{{product.Bullet02}}</view>
+          </view>
+          <view class="properties-Textdetail {{product.Bullet03==''?'hideView':''}}">
+            <view class="properties-Marker">‧</view>
+            <view class="properties-Text">{{product.Bullet03}}</view>
+          </view>
+          <view class="properties-Textdetail {{product.Bullet04==''?'hideView':''}}">
+            <view class="properties-Marker">‧</view>
+            <view class="properties-Text">{{product.Bullet04}}</view>
+          </view>
+          <view class="properties-Textdetail {{product.Bullet05==''?'hideView':''}}">
+            <view class="properties-Marker">‧</view>
+            <view class="properties-Text">{{product.Bullet05}}</view>
+          </view>
+          <view class="properties-Textdetail {{product.Bullet06==''?'hideView':''}}">
+            <view class="properties-Marker">‧</view>
+            <view class="properties-Text">{{product.Bullet06}}</view>
+          </view>
+          <view class="properties-Textdetail {{product.Bullet07==''?'hideView':''}}">
+            <view class="properties-Marker">‧</view>
+            <view class="properties-Text">{{product.Bullet07}}</view>
+          </view>
+          <view class="properties-Textdetail {{product.Bullet08==''?'hideView':''}}">
+            <view class="properties-Marker">‧</view>
+            <view class="properties-Text">{{product.Bullet08}}</view>
+          </view>
+          <view class="properties-Textdetail {{product.Bullet09==''?'hideView':''}}">
+            <view class="properties-Marker">‧</view>
+            <view class="properties-Text">{{product.Bullet09}}</view>
+          </view>
+          <view class="properties-Textdetail {{product.Bullet10==''?'hideView':''}}">
+            <view class="properties-Marker">‧</view>
+            <view class="properties-Text">{{product.Bullet10}}</view>
+          </view>
+          <view class="properties-Textdetail {{product.Bullet11==''?'hideView':''}}">
+            <view class="properties-Marker">‧</view>
+            <view class="properties-Text">{{product.Bullet11}}</view>
+          </view>
+          <view class="properties-Textdetail {{product.Bullet12==''?'hideView':''}}">
+            <view class="properties-Marker">‧</view>
+            <view class="properties-Text">{{product.Bullet12}}</view>
+          </view>
+          <view class="properties-Textdetail {{product.Bullet13==''?'hideView':''}}">
+            <view class="properties-Marker">‧</view>
+            <view class="properties-Text">{{product.Bullet13}}</view>
+          </view>
+          <view class="properties-Textdetail {{product.Bullet14==''?'hideView':''}}">
+            <view class="properties-Marker">‧</view>
+            <view class="properties-Text">{{product.Bullet14}}</view>
+          </view>
+          <view class="properties-Textdetail {{product.Bullet15==''?'hideView':''}}">
+            <view class="properties-Marker">‧</view>
+            <view class="properties-Text">{{product.Bullet15}}</view>
+          </view>
+        </view>
+        <view class="properties-TextArea addLine-top {{product.Narrative_Description==''?'hideView':''}}">
+          <view class="properties-name">{{language.lang_product_itemabout}}</view>
+          <view class="properties-Textdetail">
+            <view class="properties-Text">{{product.Narrative_Description}}</view>
+          </view>
+        </view>
+      </view>
+
+    </view>
+  </view>
+</view>
+<v-search bind:cancle="onCancle" wx:if="{{searching}}" />
+
+<loading hidden="{{loadingHidden}}">
+    {{language.loading}}
+</loading>
+
+<wxs module="func">
+      module.exports = {
+        ToPriceStr: function (e) {
+          if(e == undefined) return '';
+          
+          var tmpNum = e.toString();
+          var tmpStr = '';
+          var strIndex = 0;
+          for (var i = (tmpNum.length - 1); i >= 0; i--) {
+            if(((strIndex % 3) == 0) && (strIndex != 0))
+            {
+              tmpStr = tmpNum[i] + "," + tmpStr;
+            }
+            else
+            {
+              tmpStr = tmpNum[i] + tmpStr;
+            }
+
+            strIndex = strIndex + 1;
+          }
+          return tmpStr;
+        },
+        ToSale: function(e,x) {
+          var tmpPrice = parseInt(e);
+          var tmpSale = parseInt(x);
+
+          return tmpPrice * (1 - (tmpSale / 100));
+        },
+        /*無條件進位到百位數*/
+        ToRound:function(e) {
+          return Math.ceil(e/100)*100
+        }
+      }
+</wxs> 

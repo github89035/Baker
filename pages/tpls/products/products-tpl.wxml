@@ -1,0 +1,248 @@
+<template name="products">
+    <view class="products-box">
+        <block wx:for="{{productsArr}}">
+            <view class="products-item" bindtap="onProductsItemTap" data-fsNo="{{item.fsNo}}" data-fFgID="{{item.fFgID}}" data-fFgName="{{item.fFgName}}" data-fFgNo="{{item.fFgNo}}" data-fUnitprice="{{item.fUnitprice}}">
+                <image class="products-image" src="{{item.fImageUrl}}" mode="aspectFill"></image>
+                <view class="products-item-bottom">
+                    <text class="name">{{item.fFgName}}</text>
+                    <view class="price">￥{{item.fUnitprice}}</view>
+                </view>
+            </view>
+        </block>
+    </view>
+</template>
+
+<!-- <template name="Finish">
+    <view class="abcde">
+        <picker bindchange="FinishChange" range="{{Item_Finishes}}" range-key="pFinishName" >
+            <view style="display: flex; align-items: center;">
+                <text class="Option-item-Text">材質等級：{{Item_Finishes[FinishIndex].pFinishName}}</text>
+                <image class="counts-icon" src="../../imgs/icon/arrow@right.png"></image>
+            </view>
+        </picker>
+        <button class="OptionBtn" bindtap="onFinishTextureBtn">返回</button>
+    </view>
+    <view class="bcdef" wx:if="{{Item_Finishes[FinishIndex].m_Finish_ChileS.length>0}}">
+        <scroll-view scroll-y="true" enable-flex="true" class="Option-main" >
+        <block wx:for="{{Item_Finishes[FinishIndex].m_Finish_ChileS}}" wx:for-item="FinishChile">
+            <button class="Option-items-two" bindtap="FinishChileChange" bindlongtap="FinishPreviewImg" data-index="{{index}}" style="{{(nFinishIndex==FinishIndex&&Item_Finishes[nFinishIndex].nChileSelect==index)?'border: 1px solid #FF4D40;':''}}">
+                <image src="{{FinishChile.pImgURL}}" mode="aspectFit"></image>
+                <view>{{FinishChile.pFinishChileName}}</view>
+            </button>
+        </block>
+        </scroll-view>
+    </view>
+</template> -->
+
+<template name="FLTexture">
+    <view class="abcde">
+        <picker bindchange="StyleChange" class="style-counts" range="{{Item_StyleS}}" range-key="StyleType" >
+            <view style="display: flex; align-items: center;">
+                <text class="counts-tips">材質：</text>
+                <text class="counts-data">{{Item_StyleS[StyleIndex].StyleType}}</text>
+                <image class="counts-icon" src="../../imgs/icon/arrow@right.png"></image>
+            </view>
+        </picker>
+        <picker class="style-counts" bindchange="bindPickerChange_style" value="{{Item_StyleS[StyleIndex].Style_No_Index}}" range="{{Item_StyleS[StyleIndex].Item_Style_NoS}}" range-key="pSelectObj" >
+                <view style="display: flex; align-items: center;">
+                    <text class="counts-tips">LEVEL：</text>
+                    <text class="counts-data">{{Item_StyleS[StyleIndex].Item_Style_NoS[Style_No_Index].pLevel}}</text>
+                    <image class="counts-icon" src="../../imgs/icon/arrow@right.png"></image>
+                </view>
+            </picker>
+        <button class="OptionBtn" bindtap="onStyleChangeBtn">返回</button>
+    </view>
+    <view class="bcdef">
+        <scroll-view scroll-y="true" enable-flex="true" class="Option-main" >
+        <block wx:for="{{Item_StyleS[StyleIndex].Item_Style_NoS[Style_No_Index].m_StyleChileS}}" wx:for-item="StyleChile">
+            <button class="Option-items-two" bindtap="StyleChileChange" bindlongtap="StylePreviewImg" data-index="{{index}}" style="{{(nStyleIndex==StyleIndex&&nStyle_No_Index==Style_No_Index&&Item_StyleS[nStyleIndex].Item_Style_NoS[nStyle_No_Index].nChileSelect==index)?'border: 1px solid #FF4D40;':''}}">
+                <image src="{{StyleChile.pImgURL}}" mode="aspectFit"></image>
+                <view>{{StyleChile.pStyleChileName}}</view>
+            </button>
+        </block>
+        </scroll-view>
+    </view>
+</template>
+
+<template name="Finish">
+    <view class="abcde">
+        <picker bindchange="FinishChange" range="{{Item_Finishes}}" range-key="pFinishName" >
+            <view style="display: flex; align-items: center;">
+                <text class="Option-item-Text">材質等級：{{Item_Finishes[FinishIndex].pFinishName}}</text>
+                <image class="counts-icon" src="../../imgs/icon/arrow@right.png"></image>
+            </view>
+        </picker>
+        <button class="OptionBtn" bindtap="onFinishTextureBtn">返回</button>
+    </view>
+    <view class="bcdef" wx:if="{{Item_Finishes[FinishIndex].m_Finish_ChileS.length>0}}">
+        <scroll-view scroll-y="true" enable-flex="true" class="Option-main" >
+        <block wx:for="{{Item_Finishes[FinishIndex].m_Finish_ChileS}}" wx:for-item="FinishChile">
+            <button class="Option-items-two" bindtap="FinishChileChange" bindlongtap="FinishPreviewImg" data-index="{{index}}" style="{{(nFinishIndex==FinishIndex&&Item_Finishes[nFinishIndex].nChileSelect==index)?'border: 1px solid #FF4D40;':''}}">
+                <image src="{{FinishChile.pImgURL}}" mode="aspectFit"></image>
+                <view>{{FinishChile.pFinishChileName}}</view>
+            </button>
+        </block>
+        </scroll-view>
+    </view>
+</template>
+
+<template name="Finish2">
+    <view class="abcde">
+        <picker bindchange="Finish2Change" range="{{Item_Finishes}}" range-key="pFinishName" >
+            <view style="display: flex; align-items: center;">
+                <text class="Option-item-Text">材質等級：{{Item_Finishes[Finish2Index].pFinishName}}</text>
+                <image class="counts-icon" src="../../imgs/icon/arrow@right.png"></image>
+            </view>
+        </picker>
+        <button class="OptionBtn" bindtap="onFinish2TextureBtn">返回</button>
+    </view>
+    <view class="bcdef" wx:if="{{Item_Finishes[Finish2Index].m_Finish_ChileS.length>0}}">
+        <scroll-view scroll-y="true" enable-flex="true" class="Option-main" >
+        <block wx:for="{{Item_Finishes[Finish2Index].m_Finish_ChileS}}" wx:for-item="FinishChile">
+            <button class="Option-items-two" bindtap="Finish2ChileChange" bindlongtap="Finish2PreviewImg" data-index="{{index}}" style="{{(nFinishIndex==Finish2Index&&Item_Finishes[nFinishIndex].nChileSelect==index)?'border: 1px solid #FF4D40;':''}}">
+                <image src="{{FinishChile.pImgURL}}" mode="aspectFit"></image>
+                <view>{{FinishChile.pFinishChileName}}</view>
+            </button>
+        </block>
+        </scroll-view>
+    </view>
+</template>
+
+<template name="Pillow">
+    <view class="abcde">
+        <button class="OptionBtn" bindtap="onPillowChange">返回</button>
+    </view>
+    <view class="bcdef">
+        <block wx:for="{{m_PillowS}}" wx:for-item="aPillow">
+            <view style="border-bottom: 1rpx solid #D8D8D8;padding-bottom: 30rpx;padding-top: 20rpx;">
+                <view style="width: 100%;margin-left: 30rpx;">
+                    <text>順序：{{aPillow.nNum}}</text>
+                    <text style="margin-left:30rpx;">部位：{{aPillow.pTypeName}}</text>
+                </view>
+                <view wx:if="{{aPillow.pSize_Metric != ''}}" style="width: 100%;margin-left: 30rpx;">
+                    <text style="margin-left:30rpx;">Size：{{aPillow.pSize_Metric}}</text>
+                </view>
+                <view class="FL-box">
+                    <view style="margin-left:20px;margin-right:20px;">
+                    <button class="btn" bindtap="onPillowFLBtn" data-PillowNo="{{aPillow.nNum}}">選皮布</button>
+                    </view>
+                    <view style="display: grid; align-items: center;">
+                    <text style="margin-right:10rpx">材質：{{Item_StyleS[aPillow.nFLIndex].StyleType}}</text>
+                    <text style="margin-right:10rpx">等級：{{Item_StyleS[aPillow.nFLIndex].Item_Style_NoS[aPillow.nFLTypeNo].pLevel}}</text>
+                    <text style="margin-right:10rpx">料號：{{Item_StyleS[aPillow.nFLIndex].Item_Style_NoS[aPillow.nFLTypeNo].m_StyleChileS[aPillow.nFLChileNo].pStyleChileName}}</text>
+                    </view>
+                </view>
+            </view>
+        </block>
+    </view>
+</template>
+
+<template name="PillowFL">
+    <view class="abcde">
+        <picker bindchange="PillowFLChange" class="style-counts" range="{{Item_StyleS}}" range-key="StyleType" >
+            <view style="display: flex; align-items: center;">
+                <text class="counts-tips">材質：</text>
+                <text class="counts-data">{{Item_StyleS[tmpPillowIndex].StyleType}}</text>
+                <image class="counts-icon" src="../../imgs/icon/arrow@right.png"></image>
+            </view>
+        </picker>
+        <picker class="style-counts" bindchange="bindPickerChange_PillowFL" value="{{Item_StyleS[tmpPillowIndex].Style_No_Index}}" range="{{Item_StyleS[tmpPillowIndex].Item_Style_NoS}}" range-key="pLevel" >
+            <view style="display: flex; align-items: center;">
+                <text class="counts-tips">LEVEL：</text>
+                <text class="counts-data">{{Item_StyleS[tmpPillowIndex].Item_Style_NoS[tmpPillowTypeNo].pLevel}}</text>
+                <image class="counts-icon" src="../../imgs/icon/arrow@right.png"></image>
+            </view>
+        </picker>
+        <button class="OptionBtn" bindtap="onPillowFLBack">返回</button>
+    </view>
+    <view class="bcdef">
+        <scroll-view scroll-y="true" enable-flex="true" class="Option-main" >
+        <block wx:for="{{Item_StyleS[tmpPillowIndex].Item_Style_NoS[tmpPillowTypeNo].m_StyleChileS}}" wx:for-item="StyleChile">
+            <button class="Option-items-two" bindtap="onPillowFLChangeBtn" bindlongtap="PillowFLPreviewImg" data-index="{{index}}" style="{{(tmpPillowIndex==m_PillowS[nowPillowNo].nFLIndex&&tmpPillowTypeNo==m_PillowS[nowPillowNo].nFLTypeNo&&m_PillowS[nowPillowNo].nFLChileNo==index)?'border: 1px solid #FF4D40;':''}}">
+                <image src="{{StyleChile.pImgURL}}" mode="aspectFit"></image>
+                <view>{{StyleChile.pStyleChileName}}</view>
+            </button>
+        </block>
+        </scroll-view>
+    </view>
+    <view class="cdefg">
+        <button bindtap="onPillowFLReBtn">跟隨椅子</button>
+    </view>
+</template>
+
+<template name="Inventory">
+    <view class="abcde">
+        <picker bindchange="InventoryChange" class="style-counts" range="{{InventoryArray}}" range-key="name" >
+            <view style="display: flex; align-items: center;">
+                <text class="counts-tips">位置：</text>
+                <text class="counts-data">{{InventoryArray[InventoryIndex].name}}</text>
+                <image class="counts-icon" src="../../imgs/icon/arrow@right.png"></image>
+            </view>
+        </picker>
+        <button class="InventoryBtn" style="margin-right: 20rpx;" bindtap="onInventory">返回</button>
+    </view>
+    <view class="bcdef">
+        <view hidden="{{InventoryArray[InventoryIndex].id != 'store'}}">
+            <block wx:for="{{m_StoreProductS}}" wx:for-item="aStoreProduct">
+                <view class="InventoryItem">
+                    <text>NO. {{aStoreProduct.pItem_No}}</text>
+                    <text>{{aStoreProduct.pProduct_Name}}</text>
+                    <!-- <text>{{aStoreProduct.pProduct_Dimensions}}</text> -->
+                    <text hidden="{{aStoreProduct.pWood == ''}}">木材：{{aStoreProduct.pWood}}</text>
+                    <text hidden="{{aStoreProduct.pMetal == ''}}">金工：{{aStoreProduct.pMetal}}</text>
+                    <text hidden="{{aStoreProduct.pFabric == ''}}">皮布料號：{{aStoreProduct.pFabric}}</text>
+                    <text hidden="{{aStoreProduct.pLeather == ''}}">皮布料號：{{aStoreProduct.pLeather}}</text>
+                    <text hidden="{{aStoreProduct.nBase_Price <= 0}}">牌價：NT$ {{func.ToPriceStr(func.ToRound(aStoreProduct.nBase_Price * (1 + PriceListRate) * Rate))}}</text>
+                    <!-- <text hidden="{{aStoreProduct.nBase_Price <= 0}}">運費+組裝費：NT$ {{func.ToPriceStr(func.ToRound(func.ToRound(aStoreProduct.nBase_Price * (1 + PriceListRate) * (1 + Rate)) * 0.2))}}</text> -->
+                    <!-- <text hidden="{{aStoreProduct.nBase_Price <= 0}}">設計服務費：NT$ {{func.ToPriceStr(aStoreProduct.nDesign_Price)}}</text> -->
+                    <text>庫存數量：{{aStoreProduct.pOrder_Qty}}</text>
+                    <button style="margin-right: 10rpx;" hidden="{{aStoreProduct.nBase_Price <= 0}}" data-StoreProduct="{{aStoreProduct}}" bindtap="AddInventory">加入購物車</button>
+                </view>
+            </block>
+        </view>
+        <view hidden="{{InventoryArray[InventoryIndex].id != 'SKU'}}">
+            <block wx:for="{{m_SKUS}}" wx:for-item="aSKU">
+                <view class="InventoryItem">
+                    <text>NO. {{aSKU.pSKU}}</text>
+                    <text>{{aSKU.Version}}</text>
+                    <button style="margin-right: 10rpx;">加入購物車</button>
+                </view>
+            </block>
+        </view>
+    </view>
+</template>
+
+<wxs module="func">
+      module.exports = {
+        ToPriceStr: function (e) {
+          if(e == undefined) return '0';
+          
+          var tmpNum = e.toString();
+          var tmpStr = '';
+          var strIndex = 0;
+          for (var i = (tmpNum.length - 1); i >= 0; i--) {
+            if(((strIndex % 3) == 0) && (strIndex != 0))
+            {
+              tmpStr = tmpNum[i] + "," + tmpStr;
+            }
+            else
+            {
+              tmpStr = tmpNum[i] + tmpStr;
+            }
+
+            strIndex = strIndex + 1;
+          }
+          return tmpStr;
+        },
+        ToSale: function(e,x) {
+          var tmpPrice = parseInt(e);
+          var tmpSale = parseInt(x);
+
+          return tmpPrice * (1 - (tmpSale / 100));
+        },
+        /*無條件進位到百位數*/
+        ToRound:function(e) {
+          return Math.ceil(e/100)*100
+        }
+      }
+</wxs> 

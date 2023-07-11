@@ -1,0 +1,14 @@
+@import "../tpls/cart.wxss";
+
+.culture{
+  width: 100%;
+}
+view text{
+  font-size: 24rpx;
+}
+
+.text-box{
+  width: 92%;
+  margin: 0 auto;
+
+}

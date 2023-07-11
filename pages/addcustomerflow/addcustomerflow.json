@@ -1,0 +1,12 @@
+{
+  "usingComponents": {
+    "l-input": "/dist/input/index",
+    "l-radio-group": "/dist/radio-group/index",
+    "l-radio": "/dist/radio/index",
+    "l-textarea": "/dist/textarea/index",
+    "l-checkbox-group": "/dist/checkbox-group/index",
+    "l-checkbox": "/dist/checkbox/index",
+    "l-card": "/dist/card/index",
+    "l-button": "/dist/button/index"
+  }
+}

@@ -1,0 +1,70 @@
+  <view class="my-order">
+  	<view class="fixed-btns-box" bindtap="onCartTap">
+  		<view class="fiexd-cart {{isShake?'animate':''}}">
+  			<image src="../../imgs/icon/cart@top.png"></image>
+  			<view wx:if="{{cartTotalCounts>0}}">{{cartTotalCounts}}</view>
+  		</view>
+  	</view>
+  	<view class="item-title">
+  		<view class="station">
+  			<view class='select_box'>
+  				<view class='select' catchtap='selectTap'>
+  					<text class='select_text' wx-if="{{!hadselect}}">请选择条件</text>
+  					<text class='select_text'  wx:else>{{selectData[index].text}}</text>
+  					<image class='select_img {{show&&"select_img_rotate"}}' src='/imgs/icon/arrow@right.png'></image>
+  				</view>
+  				<!-- 选项框高度控制 没有点击则为0，有点击根据选项确定-->
+  				<view class='option_box' style='height:{{show?(selectData.length>5?300:selectData.length*60):0}}rpx;z-index:100;'>
+  					<text class='option' style='{{index==selectData.length-1&&"border:0;"}}' wx:for='{{selectData}}' wx:key='this' data-index='{{index}}' data-value='{{item.value}}'   catchtap='optionTap'>{{item.text}}</text>
+  				</view>
+  			</view>
+  			<view class='search'>
+  				<view>
+  					<input type='text' placeholder='请输入关键字' bindinput='getInput' bindconfirm='confirm' />
+  				</view>
+  				<view data-keyword="{{keyword}}" data-searchType="{{index}}" ontap="searchOrder" style="width:50rpx;height:50rpx;">
+  					<icon type='search' class='icons'></icon>
+  				</view>
+  			</view>
+  		</view>
+  	</view>
+  	<view class="item-main">
+  		<view class="top"></view>
+  		<block wx:for="{{returnOrderArr}}">
+  			<view class="order-item">
+  				<view class="order-header" ontap="showReturnOrderDetailInfo" data-fOrdReturnID="{{item.fOrdReturnID}}">
+  					<text>售后服务单编号:</text>
+  					<text class="order-no-txt">{{item.fOrdReturnNo}}</text>
+  				</view>
+  				<view class="order-header order-customer" ontap="showReturnOrderDetailInfo" data-fOrdReturnID="{{item.fOrdReturnID}}">
+  					<view>
+  						<text>客户姓名:</text>
+  						<text class="order-no-txt">{{item.fCustomername}}</text>
+  					</view>
+  					<view style="margin-left:20rpx;">
+  						<text>客户电话:</text>
+  						<text class="order-no-txt">{{item.fRecivetel}}</text>
+  					</view>
+  				</view>
+  				<view class="order-main" ontap="showReturnOrderDetailInfo" data-fOrdReturnID="{{item.fOrdReturnID}}">
+  					<view class="item-left">
+  						<image src="{{item.fImageUrl}}"></image>
+  					</view>
+  					<view class="item-middle">
+  						<view>{{item.fFgName}}</view>
+  						<!-- <view>{{item.total_count}}</view> -->
+  					</view>
+  					<view class="item-right">
+  						<text class="order-status-txt unpay" wx:if="{{item.fcFlag==0}}">新建</text>
+  						<text class="order-status-txt payed" wx:if="{{item.fcFlag==3}}">已审核</text>
+  						<text class="order-status-txt done" wx:if="{{item.fcFlag==5}}">已完结</text>
+  					</view>
+  				</view>
+  				<view class="order-bottom">
+  					<text>退货金额:￥{{item.fReturnAmount}}</text>
+  					<view class="pay" ontap="rePay" wx:if="{{item.fcFlag==0}}" data-fOrdReturnID="{{item.fOrdReturnID}}" data-index="{{index}}" ontap="orderReview">售后单审核</view>
+  				</view>
+  			</view>
+  		</block>
+  	</view>
+  </view>

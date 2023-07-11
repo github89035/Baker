@@ -1,0 +1,31 @@
+.fixed-btns-box {
+  position: fixed;
+  top: 10rpx;
+  right: 10rpx;
+  width: 80rpx;
+  z-index: 999;
+}
+
+.fiexd-cart image {
+  height: 64rpx;
+  width: 64rpx;
+}
+
+.fiexd-cart view {
+  font-size: 24rpx;
+  background-color: #FF4D40;
+  color: white;
+  position: absolute;
+  right: 64rpx;
+  top: 0rpx;
+  height: 36rpx;
+  width: 36rpx;
+  line-height: 36rpx;
+  border-radius: 36rpx;
+  text-align: center;
+}
+
+.fiexd-cart.animate {
+  animation: aCartScale 200ms cubic-bezier(.17, .67, .83, .67);
+  animation-fill-mode: backwards;
+}

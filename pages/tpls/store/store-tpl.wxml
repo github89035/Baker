@@ -1,0 +1,13 @@
+<template name="store">
+		<block wx:for="{{categoryInfo.procucts}}">
+			<view class="category-main">
+				<view class="image-view" data-fAddress="{{item.fAddress}}" data-fImageUrl="{{item.fImageUrl}}" data-fOrgName="{{item.fOrgName}}" data-fTel="{{item.fTel}}" data-fTime="{{item.fTime}}" bindtap="gotostoredetial">
+					<image src="{{item.fImageUrl}}" mode="scaleToFill"></image>
+				</view>
+				<view class="text-view">
+					<text>{{item.fCity}}</text>
+					<text>{{item.fOrgName}}</text>
+				</view>
+			</view>
+		</block>
+</template>

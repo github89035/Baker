@@ -1,0 +1,15 @@
+<view class="container">
+<view class="fixed-btns-box" bindtap="onCartTap">
+	<view class="fiexd-cart {{isShake?'animate':''}}">
+		<image src="../../imgs/icon/cart@top.png"></image>
+		<view wx:if="{{cartTotalCounts>0}}">{{cartTotalCounts}}</view>
+	</view>
+</view>
+	<view class="top"></view>
+	<view class="title">{{fDesignName}}</view>
+	<block wx:for="{{CaseDetialData}}">
+		<view class="view-box">
+			<image src="{{item.fImageUrl}}" mode="widthFix"></image>
+		</view>
+	</block>
+</view>

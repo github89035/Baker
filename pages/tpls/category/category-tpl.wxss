@@ -1,0 +1,149 @@
+.category-detail-box{
+    overflow: hidden;
+    padding: 10px 5px 55px 5px;
+}
+.category-header{
+    height: 200rpx;
+    text-align: center;
+}
+.category-header image{
+    border-radius: 5rpx;
+    width: 520rpx;
+    max-height: 100%;
+}
+.foods-type-box{
+    overflow-x: hidden;
+}
+.category-main{
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 15rpx;
+    margin-bottom: 15rpx;
+}
+.category-main-heightmax{
+    height: 100%;
+}
+.center-wrap-button{
+    display: flex;
+    flex-wrap: row;
+}
+.category-goods-items{
+    width: 28%;
+    margin-bottom: 20rpx;
+    text-align: center;
+}
+.category-goods-items.middle{
+    margin:0 20rpx;
+}
+/* .cart-item-img{
+    width:120rpx;
+    height: 120rpx;
+} */
+.category-goods-items image {
+    width:120rpx;
+    height: 120rpx;
+}
+.category-goods-items view {
+    color:#444452;
+    font-size: 24rpx;
+}
+
+.category-goods-items-two
+{
+    width: 45%;
+    margin-bottom: 20rpx;
+    text-align: center;
+}
+.category-goods-items-two image
+{
+    width: 240rpx;
+    height: 240rpx;
+}
+.category-goods-items-two view
+{
+    color:#444452;
+    font-size: 24rpx;
+}
+.category-goods-items-one
+{
+    width: 95%;
+    margin-bottom: 20rpx;
+    text-align: center;
+}
+.category-goods-items-one image
+{
+    width: 480rpx;
+    height: 350rpx;
+}
+.category-goods-items-one view
+{
+    color:#444452;
+    font-size: 24rpx;
+}
+.center-wrap {
+  height: 100vh;
+  width: 650rpx;
+  background: #fff;
+  border-radius: 20rpx;
+  overflow-y: scroll;
+}
+
+.category-title{
+    margin: 10px;
+    display: block;
+    align-items: center;
+    justify-content: center;
+}
+.category-typeno{
+    width: 100%;
+    padding: 10px 0;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size:28rpx;
+    border-left: 6rpx solid #fff;
+}
+.category-groupno{
+    width: 50px;
+    padding: 10px 0;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size:28rpx;
+    border-left: 6rpx solid #fff;
+}
+.maxWidth{
+    width: 100%;
+}
+.category-groupno.selected{
+    color: #FF4D40;
+    border-left-color:#FF4D40;
+}
+
+.tanslategroup0{
+    transform:translate(0,0);
+}
+.tanslategroup1{
+    transform:translate(0,-100vh);
+}
+.tanslategroup2{
+    transform:translate(0,-200vh);
+}
+.tanslategroup3{
+    transform:translate(0,-300vh);
+}
+.tanslategroup4{
+    transform:translate(0,-400vh);
+}
+.tanslategroup5{
+    transform:translate(0,-500vh);
+}
+
+.showview{
+    display: flex;
+    transition: all 500ms ease-in-out;
+}
+.hidview{
+    display: none;
+    transition: all 500ms ease-in-out;
+}

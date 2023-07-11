@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "客流登記列表",
+  "usingComponents": {
+    "l-icon": "/dist/icon/index"
+  }
+}

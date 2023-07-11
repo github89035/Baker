@@ -1,0 +1,353 @@
+<view class="container">
+	<form bindsubmit="customerFlowFormSubmit">
+		<view class="input-box">
+			<input hidden="{{true}}" name='pCustomUID' class="radio input" placeholder="客流登記ID" value="{{pCustomUID}}"></input>
+			<input hidden="{{true}}" name='pStoreID' class="radio input" placeholder="店ID" value="{{pStoreID}}"></input>
+			<input hidden="{{true}}" name='from' class="radio input" placeholder="客流登記ID" value="{{from}}"></input>
+      <view class="row input-text">
+                <label class="font-color text">門市*:</label>
+                 <picker class="radio input innertext" bindchange="pickerChange1" value="{{selectedValue1}}" range="{{options1}}">
+                    <view class="innertext">
+                     {{selectedText1}}
+                     </view>
+                </picker>
+            </view>
+            <view class="row input-text">
+                <label class="font-color">負責業務*:</label>
+                 <picker class="radio input innertext" bindchange="pickerChange2" value="{{selectedValue2}}" range="{{options2}}">
+                    <view class="innertext">
+                     {{selectedText2}}
+                     </view>
+                </picker>
+            </view>
+            <view class="row input-text">
+            <label class="font-color">初次接洽日期*</label>
+                <picker class="radio input innertext" mode="date" value="{{selectedDate1}}" start="1900-01-01" end="9999-12-31" bindchange="datePickerChange1">
+                    <view class="innertext">
+                    {{selectedDate1 || '請選擇日期'}}
+                    </view>
+                 </picker>
+            </view>
+            <view class="row input-text">
+                <label class="font-color">客戶分類*:</label>
+                 <picker class="radio input innertext" bindchange="pickerChange3" value="{{selectedValue3}}" range="{{options3}}">
+                    <view class="innertext">
+                     {{selectedText3}}
+                     </view>
+                </picker>
+            </view>
+      <view class="row input-text">
+				<label class="font-color">業主全名*:</label>
+				<input  name='fPassenger' class="radio input font-color" placeholder="" value="{{fPassenger}}"></input>
+			</view>
+      <view class="row input-text">
+				<label class="font-color">業主公司名:</label>
+				<input name='fPassengercompany' class="radio input font-color" placeholder="" value="{{fPassenger}}"></input>
+			</view>
+      <view class="row input-text">
+            <label class="font-color">業主生日：</label>
+                <picker class="radio input innertext" mode="date" value="{{selectedDate2}}" start="1900-01-01" end="9999-12-31" bindchange="datePickerChange2">
+                    <view class="innertext">
+                    {{selectedDate2 || '請選擇日期'}}
+                    </view>
+                </picker>
+      </view>
+      <view class="row input-text">
+				<label class="font-color">設計公司名*:</label>
+				<input name='fdesignercompany' class="radio input font-color" placeholder="" value="{{fPassenger}}"></input>
+			</view>
+      <view class="row input-text">
+				<label class="font-color">專案聯絡人全名*:</label>
+				<input name='fcontactor' class="radio input font-color" placeholder="" value="{{fPassenger}}"></input>
+			</view>
+      <view class="row input-text">
+				<label class="font-color">專案聯絡人聯絡地址:</label>
+				<input name='fcontactoraddress' class="radio input font-color" placeholder="" value="{{fPassenger}}"></input>
+			</view>
+      <view class="row input-text">
+				<label class="font-color">案場地址A(需備註大樓名):</label>
+				<input name='faddress1' class="radio input font-color" placeholder="" value="{{fPassenger}}"></input>
+			</view>
+      <view class="row input-text">
+				<label class="font-color">案場地址B(需備註大樓名):</label>
+				<input name='faddress2' class="radio input font-color" placeholder="" value="{{fPassenger}}"></input>
+			</view>
+      <view class="row input-text">
+				<label class="font-color">案場地址C(需備註大樓名):</label>
+				<input name='faddress3' class="radio input font-color" placeholder="" value="{{fPassenger}}"></input>
+			</view>
+			<view class="row input-text">
+				<label class="font-color">家電號碼:</label>
+				<input name='fHomephone' class="radio input font-color" placeholder="" value="{{fHomephone}}"></input>
+			</view>
+			<view class="row input-text">
+				<label class="font-color">手機號碼:</label>
+				<input name='fTelephone' class="radio input font-color" placeholder="" value="{{fTelephone}}"></input>
+			</view>
+      <view class="row input-text">
+				<label class="font-color">Section:</label>
+				<input name='fSection' class="radio input font-color" placeholder="" value="{{fTelephone}}"></input>
+			</view>
+      <view class="row input-text">
+				<label class="font-color">LineID:</label>
+				<input name='fLineIDe' class="radio input font-color" placeholder="" value="{{fTelephone}}"></input>
+			</view>
+      <view class="row input-text">
+				<label class="font-color">統編:</label>
+				<input name='fcode' class="radio input font-color" placeholder="" value="{{fTelephone}}"></input>
+			</view>
+      <view class="row input-text">
+				<label class="font-color">介紹人:</label>
+				<input name='fintroductor' class="radio input font-color" placeholder="" value="{{fTelephone}}"></input>
+			</view>
+      <view class="row input-text">
+				<label class="font-color">備註:</label>
+				<input name='fRemark' class="radio input font-color" placeholder="" value="{{fTelephone}}"></input>
+			</view>
+			<!-- <view class="row input-text">
+				<label class="font-color">信箱:</label>
+				<input name='pCustomEmail' class="radio input font-color" placeholder="" value="{{pCustomEmail}}"></input>
+			</view> -->
+			<!-- <view class="row input-text">
+				<label class="font-color">地址:</label>
+				<input name='fArea' class="radio input font-color" placeholder="" value="{{fArea}}"></input>
+			</view> -->
+		<!-- 	<view class="row input-text">
+				<label class="font-color">大樓名稱:</label>
+				<input name='pCustomResidentialName' class="radio input font-color" placeholder="" value="{{pCustomResidentialName}}"></input>
+			</view> -->
+			<!-- <view class="row input-text">
+				<label class="font-color">年齡:</label>
+				<input name='fAge' class="radio input font-color" placeholder="" value="{{fAge}}"></input>
+			</view> -->
+		<!-- 	<view class="row">
+				<label>稱呼:</label>
+				<radio-group name='fSexs' class="radio-wrap radio-group-flex" bindchange="onChangeTap">
+					<block wx:if="{{fSexs==''}}">
+						<block wx:for="{{sex}}">
+							<radio class="radio" value="{{item.value}}">
+								<text>{{item.text}}</text>
+							</radio>
+						</block>
+					</block>
+					<block wx:else>
+						<block wx:for="{{sex}}">
+							<block wx:if="{{fSexs==item.value}}">
+								<radio disabled="{{revise}}" class="radio" value="{{item.value}}" checked="checked">
+									<text>{{item.text}}</text>
+								</radio>
+							</block>
+							<block wx:else>
+								<radio disabled="{{revise}}" class="radio" value="{{item.value}}">
+									<text>{{item.text}}</text>
+								</radio>
+							</block>
+						</block>
+					</block>
+				</radio-group>
+			</view> -->
+			<!-- <view class="row">
+				<label>访问类别:</label>
+				<radio-group name='fVisittype' class="radio-wrap" bindchange="onChangeTap">
+					<block wx:if="{{fVisittype==''}}">
+						<block wx:for="{{visittype}}">
+							<radio class="radio" value="{{item.value}}">
+								<text>{{item.text}}</text>
+							</radio>
+						</block>
+					</block>
+					<block wx:else>
+						<block wx:for="{{visittype}}">
+							<block wx:if="{{fVisittype==item.value}}">
+								<radio disabled="{{revise}}" class="radio" value="{{item.value}}" checked="checked">
+									<text>{{item.text}}</text>
+								</radio>
+							</block>
+							<block wx:else>
+								<radio disabled="{{revise}}" class="radio" value="{{item.value}}">
+									<text>{{item.text}}</text>
+								</radio>
+							</block>
+						</block>
+					</block>
+				</radio-group>
+			</view>
+			<view class="row">
+				<label>客户定位:</label>
+				<radio-group name='fCustomerType' class="radio-wrap" bindchange="onChangeTap">
+					<block wx:if="{{fCustomerType==''}}">
+						<block wx:for="{{customerType}}">
+							<radio class="radio" value="{{item.value}}">
+								<text>{{item.text}}</text>
+							</radio>
+						</block>
+					</block>
+					<block wx:else>
+						<block wx:for="{{customerType}}">
+							<block wx:if="{{fCustomerType==item.value}}">
+								<radio disabled="{{revise}}" class="radio" value="{{item.value}}" checked="checked">
+									<text>{{item.text}}</text>
+								</radio>
+							</block>
+							<block wx:else>
+								<radio disabled="{{revise}}" class="radio" value="{{item.value}}">
+									<text>{{item.text}}</text>
+								</radio>
+							</block>
+						</block>
+					</block>
+				</radio-group>
+			</view>
+			<view class="row">
+				<label>客种:</label>
+				<radio-group name='fCategory' class="radio-wrap" bindchange="onChangeTap">
+					<block wx:if="{{fCategory==''}}">
+						<block wx:for="{{category}}">
+							<radio class="radio" value="{{item.value}}">
+								<text>{{item.text}}</text>
+							</radio>
+						</block>
+					</block>
+					<block wx:else>
+						<block wx:for="{{category}}">
+							<block wx:if="{{fCategory==item.value}}">
+								<radio disabled="{{revise}}" class="radio" value="{{item.value}}" checked="checked">
+									<text>{{item.text}}</text>
+								</radio>
+							</block>
+							<block wx:else>
+								<radio disabled="{{revise}}" class="radio" value="{{item.value}}">
+									<text>{{item.text}}</text>
+								</radio>
+							</block>
+						</block>
+					</block>
+				</radio-group>
+			</view>
+			<view class="row">
+				<label>客户来源:</label>
+				<radio-group name='fSource' class="radio-wrap" bindchange="onChangeTap">
+					<block wx:if="{{fSource==''}}">
+						<block wx:for="{{source}}">
+							<radio class="radio" value="{{item.value}}">
+								<text>{{item.text}}</text>
+							</radio>
+						</block>
+					</block>
+					<block wx:else>
+						<block wx:for="{{source}}">
+							<block wx:if="{{fSource==item.value}}">
+								<radio disabled="{{revise}}" class="radio" value="{{item.value}}" checked="checked">
+									<text>{{item.text}}</text>
+								</radio>
+							</block>
+							<block wx:else>
+								<radio disabled="{{revise}}" class="radio" value="{{item.value}}">
+									<text>{{item.text}}</text>
+								</radio>
+							</block>
+						</block>
+					</block>
+				</radio-group>
+			</view> -->
+
+			<!-- <view class="row">
+				<label>意向客户:</label>
+				<radio-group name='fIntent' class="radio-wrap" bindchange="onChangeTap">
+					<block wx:if="{{fIntent==''}}">
+						<block wx:for="{{intent}}">
+							<radio class="radio" value="{{item.value}}">
+								<text>{{item.text}}</text>
+							</radio>
+						</block>
+					</block>
+					<block wx:else>
+						<block wx:for="{{intent}}">
+							<block wx:if="{{fIntent==item.value}}">
+								<radio disabled="{{revise}}" class="radio" value="{{item.value}}" checked="checked">
+									<text>{{item.text}}</text>
+								</radio>
+							</block>
+							<block wx:else>
+								<radio disabled="{{revise}}" class="radio" value="{{item.value}}">
+									<text>{{item.text}}</text>
+								</radio>
+							</block>
+						</block>
+					</block>
+				</radio-group>
+			</view>
+			<view class="row input-text">
+				<label class="font-color">折扣:</label>
+				<input name='fDiscount' class="radio input font-color" placeholder="" value="{{fDiscount}}"></input>
+			</view>
+			<view class="row input-text">
+				<label class="font-color">客流人数:</label>
+				<input name='fPassengerNo' class="radio input font-color" placeholder="" value="{{fPassengerNo}}"></input>
+			</view>
+			<view class="row input-text">
+				<label class="font-color">成交数量:</label>
+				<input name='fQuantity' class="radio input font-color" placeholder="" value="{{fQuantity}}"></input>
+			</view>
+			<view class="row input-text">
+				<label class="font-color">接待人:</label>
+				<input name='fReceptionist' class="radio input font-color" placeholder="" value="{{fReceptionist}}"></input>
+			</view>
+			<view class="row input-text">
+				<label class="font-color">批次:</label>
+				<input name='fSerialNo' class="radio input font-color" placeholder="" value="{{fSerialNo}}"></input>
+			</view> -->
+
+			<!-- <view class="row input-text">
+				<label class="font-color">停留时间(分钟):</label>
+				<input name='fStayTime' class="radio input font-color" placeholder="" value="{{fStayTime}}"></input>
+			</view>
+			<view class="row input-text">
+				<label class="font-color">成交金额:</label>
+				<input name='fAmount' class="radio input font-color" placeholder="" value="{{fAmount}}"></input>
+			</view> -->
+
+			<!-- <view class="row input-text">
+				<label>来访日期:</label>
+				<block wx:if="{{from=='list'}}">
+					<picker mode="date" value="{{date}}" start="0000-00-01" end="3000-09-01" bindchange="bindDateChange">
+						<view class="picker radio input" style="height:44rpx;text-align:left" placeholder="来访日期">{{fVisitDate}}</view>
+						<input name='fVisitDate' hidden="{{true}}" class="picker radio input font-color" placeholder="来访日期" value="{{date}}"></input>
+					</picker>
+				</block>
+				<block wx:else>
+					<picker mode="date" value="{{date}}" start="0000-00-01" end="3000-09-01" bindchange="bindDateChange">
+						<view class="picker radio input" style="height:44rpx;text-align:left" placeholder="来访日期">{{date}}</view>
+						<input hidden="{{true}}" name='fVisitDate' class="radio input" placeholder="来访日期" value="{{date}}"></input>
+					</picker>
+				</block>
+			</view>
+
+			<view class="row input-text">
+				<label>来访时间:</label>
+				<block wx:if="{{from=='list'}}">
+					<picker mode="time" value="{{date}}" start="00:00" end="23:59" bindchange="bindTimeChange">
+						<view class="picker radio input" style="height:44rpx;text-align:left" placeholder="来访时间">{{fVisitTime}}</view>
+						<input name='fVisitTime' hidden="{{true}}" class="picker radio input font-color" placeholder="来访时间" value="{{time}}"></input>
+					</picker>
+				</block>
+				<block wx:else>
+					<picker mode="time" value="{{date}}" start="00:00" end="23:59" bindchange="bindTimeChange">
+						<view class="picker radio input" style="height:44rpx;text-align:left" placeholder="来访时间">{{time}}</view>
+						<input hidden="{{true}}" name='fVisitTime' class="radio input" placeholder="来访时间" value="{{time}}"></input>
+					</picker>
+				</block>
+			</view> -->
+
+			<!-- <view class="row input-text">
+				<label class="font-color">接待情况:</label>
+				<textarea name="fDescription" class="textarea" placeholder="描述接待情况" value="{{fDescription}}"></textarea>
+			</view> -->
+		</view>
+		<view class="bottomArea">
+			<view wx:if="{{!(pCustomUID==''||pCustomUID==null||pCustomUID==undefined)}}" bindtap="SaveCart" class="arrow-icon" >購物車記錄</view>
+			<view wx:if="{{!(pCustomUID==''||pCustomUID==null||pCustomUID==undefined)}}" bindtap="LoadCart" class="arrow-icon" >讀取購物車</view>
+			<button class="pay disabled" form-type='submit' bindtap="handleButtonClick">提交</button>
+		</view>
+	</form>
+</view>

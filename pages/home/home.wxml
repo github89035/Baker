@@ -1,0 +1,78 @@
+<import src="../tpls/products/products-tpl.wxml" />
+
+<!-- <view class="halfPage">
+	<view style="width: 100vw;height: 3vh;"></view>
+	<image mode="aspectFit" src="/imgs/Logo/Logo.png" class="title-Image" />
+</view> -->
+
+<view wx:if="{{loadingHidden}}">
+	<view wx:if="{{!searching}}" class="container">
+		<l-popup show="{{showPopup}}" content-align="center" locked="{{lock}}">
+			<view class="center">
+				請選擇你要登入的門店：
+				<view class="option_box" style='z-index:100;'>
+					<text class="option" wx:for='{{StoreInfoS}}' data-nStoreID="{{item.nStoreID}}" data-pStoreName="{{item.pStoreName}}" bindtap="chooseStore">{{item.pStorecomment}}</text>
+				</view>
+				<view style="height:32rpx;">
+				</view>
+			</view>
+		</l-popup>
+
+		<view wx:if="{{StoreInfoS.length > 1}}" class="icon" bindtap="changeStore">
+			<text>切換</text>
+			<text>門店</text>
+		</view>
+
+		<!-- <view class="fixed-btns-box" bindtap="onCartTap">
+			<view class="fiexd-cart {{isShake?'animate':''}}">
+				<image src="../../imgs/icon/cart@top.png"></image>
+				<view wx:if="{{cartTotalCounts>0}}">{{cartTotalCounts}}</view>
+			</view>
+		</view> -->
+
+		<view class="home-main">
+			<view class="home-main-theme" wx:for="{{selectData[0].tbarndInfo}}">
+				<view class="theme-box ">
+					<view class="theme-item">
+						<view bindtap="gotocategory" data-pBrand="{{item.fBrandNo}}" indicator-dots="true" class="theme-item-text">{{item.fBrandName[langIndex]}}</view>
+					</view>
+				</view>
+			</view>
+		</view>
+		
+		<view class="header">
+			<view class='box' bind:tap="onSearching">
+				<image src="/imgs/icon/search.png" />
+				<text>{{language.lang_home_search}}</text>
+			</view>
+		</view>
+		
+		<view class="btn">
+			<text class="btn-yulan"></text>
+		</view>
+
+		<view class="home-main">
+			<!-- <view class="home-main-theme">
+				<view class="theme-box ">
+					<view class="theme-item">
+						<view bindtap="gotocategory" data-pBrand="SKU" indicator-dots="true" class="theme-item-text">庫存</view>
+					</view>
+				</view>
+			</view> -->
+			<view class="home-main-theme">
+				<view class="theme-box ">
+					<view class="theme-item">
+						<view bindtap="gotocategory" data-pBrand="store" indicator-dots="true" class="theme-item-text">門店商品</view>
+					</view>
+				</view>
+			</view>
+		</view> 
+	</view>
+	
+	<v-search bind:cancle="onCancle" wx:if="{{searching}}" />
+
+</view>
+
+<loading hidden="{{loadingHidden}}">
+	{{language.loading}}
+</loading>

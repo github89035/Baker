@@ -1,0 +1,186 @@
+<view class="container">
+	<view class="input-box">
+		<input hidden="{{true}}" name='fOrdServerID' disabled="{{true}}" class="radio input" placeholder="安装服务单ID" value="{{fOrdServerID}}"></input>
+		<view class="row input-text">
+			<label class="font-color">安装服务单号:</label>
+			<input disabled="{{true}}" class="radio input font-color" placeholder="" value="{{fOrdServerNo}}"></input>
+		</view>
+		<view class="row input-text">
+			<label class="font-color">创建时间:</label>
+			<input disabled="{{true}}" class="radio input font-color" placeholder="" value="{{fCreateDate}}"></input>
+		</view>
+		<view class="row input-text">
+			<label class="font-color">对应销售订单号:</label>
+			<input disabled="{{true}}" class="radio input font-color" placeholder="" value="{{fOrdNo}}"></input>
+		</view>
+		<view class="row input-text">
+			<label class="font-color">服务单状态:</label>
+
+			<block wx:if="{{fStatusCode==0}}">
+				<input disabled="{{true}}" class="radio input status-font-color" placeholder="" value="新增"></input>
+			</block>
+			<block wx:if="{{fStatusCode==1}}">
+				<input disabled="{{true}}" class="radio input status-font-color" placeholder="" value="审核"></input>
+			</block>
+			<block wx:if="{{fStatusCode==2}}">
+				<input disabled="{{true}}" class="radio input status-font-color" placeholder="" value="物流确认"></input>
+			</block>
+			<block wx:if="{{fStatusCode==3}}">
+				<input disabled="{{true}}" class="radio input status-font-color" placeholder="" value="已签收"></input>
+			</block>
+			<block wx:if="{{fStatusCode==4}}">
+				<input disabled="{{true}}" class="radio input status-font-color " placeholder="" value="主管审核"></input>
+			</block>
+			<block wx:if="{{fStatusCode==5}}">
+				<input disabled="{{true}}" class="radio input status-font-color" placeholder="" value="已完成"></input>
+			</block>
+		</view>
+		<view class="row input-text">
+			<label class="font-color">司机:</label>
+			<input disabled="{{true}}" class="radio input font-color" placeholder="" value="{{fBusMan}}"></input>
+		</view>
+		<view class="row input-text">
+			<label class="font-color">客户姓名:</label>
+			<input disabled="{{true}}" class="radio input font-color" placeholder="" value="{{fCustomername}}"></input>
+		</view>
+		<view class="row input-text">
+			<label class="font-color">客户指定收货人:</label>
+			<input disabled="{{true}}" class="radio input font-color" placeholder="" value="{{fReciveMan}}"></input>
+		</view>
+		<view class="row input-text">
+			<label class="font-color">客户指定收货人电话:</label>
+			<input disabled="{{true}}" class="radio input font-color" placeholder="" value="{{fReciveTel}}"></input>
+		</view>
+		<view class="row input-text">
+			<label class="font-color">交货地址:</label>
+			<input disabled="{{true}}" class="radio input font-color" placeholder="" value="{{fShipArea+fShipAddress}}"></input>
+		</view>
+		<view class="row input-text">
+			<label class="font-color">交货备注:</label>
+			<input disabled="{{true}}" class="radio input font-color" placeholder="" value="{{fShipRemark}}"></input>
+		</view>
+		<view class="row input-text">
+			<label class="font-color">提货方式:</label>
+			<block wx:if="{{fDeliveryMethods==1}}">
+				<input disabled="{{true}}" class="radio input font-color" placeholder="" value="送货"></input>
+			</block>
+			<block wx:if="{{fDeliveryMethods==2}}">
+				<input disabled="{{true}}" class="radio input font-color" placeholder="" value="自提"></input>
+			</block>
+		</view>
+		<view class="row input-text">
+			<label class="font-color">是否需要服务人员装车:</label>
+			<block wx:if="{{fIfInstaller=='Y'}}">
+				<input disabled="{{true}}" class="radio input font-color" placeholder="" value="是"></input>
+			</block>
+			<block wx:if="{{fIfInstaller=='N'}}">
+				<input disabled="{{true}}" class="radio input font-color" placeholder="" value="否"></input>
+			</block>
+		</view>
+		<view class="row input-text">
+			<label class="font-color">是否需要安装:</label>
+			<block wx:if="{{fInstallflag=='Y'}}">
+				<input disabled="{{true}}" class="radio input font-color" placeholder="" value="是"></input>
+			</block>
+			<block wx:if="{{fInstallflag=='N'}}">
+				<input disabled="{{true}}" class="radio input font-color" placeholder="" value="否"></input>
+			</block>
+		</view>
+		<view class="row input-text">
+			<label class="font-color">是否需要收取服务费:</label>
+			<block wx:if="{{fItemCode=='Y'}}">
+				<input disabled="{{true}}" class="radio input font-color" placeholder="" value="是"></input>
+			</block>
+			<block wx:if="{{fItemCode=='N'}}">
+				<input disabled="{{true}}" class="radio input font-color" placeholder="" value="否"></input>
+			</block>
+		</view>
+
+		<view class="row input-text">
+			<label class="font-color">服务人员:</label>
+			<input disabled="{{true}}" class="radio input font-color" placeholder="" value="{{fPersonGroup}}"></input>
+		</view>
+		<view class="row input-text">
+			<label class="font-color">要求完成时间:</label>
+			<input disabled="{{true}}" class="radio input font-color" placeholder="" value="{{fPromiseDate}}"></input>
+		</view>
+		<view class="row input-text">
+			<label class="font-color">服务费用:</label>
+			<input disabled="{{true}}" class="radio input font-color" placeholder="" value="{{fServerAmount}}"></input>
+		</view>
+		<view class="row input-text">
+			<label class="font-color">服务要求:</label>
+			<input disabled="{{true}}" class="radio input font-color" placeholder="" value="{{fServerNeed}}"></input>
+		</view>
+		<view class="row input-text">
+			<label class="font-color">搬楼楼层:</label>
+			<input disabled="{{true}}" class="radio input font-color" placeholder="" value="{{fUpFloor}}"></input>
+		</view>
+		<view class="row input-text">
+			<label class="font-color">车牌号:</label>
+			<input disabled="{{true}}" class="radio input font-color" placeholder="" value="{{fVecheNo}}"></input>
+		</view>
+		<view class="row input-text">
+			<label class="font-color">物流公司:</label>
+			<input disabled="{{true}}" class="radio input font-color" placeholder="" value="{{fWareCompany}}"></input>
+		</view>
+	</view>
+	<!-- <form  bindsubmit="upLoadOrdServerData"> -->
+	<block wx:for="{{tordSevFgData}}">
+		<view class="card-box">
+			<l-card class="card" style="width:100%" type="primary" image="{{item.fImageUrl}}" title="{{item.fFgName}}">
+				<!-- 此处为content -->
+				<view class="content">料号：{{item.fFgNo}}</view>
+				<view class="content">数量：{{item.fQuantity}}</view>
+				<view class="content " wx:if="{{fSupplysourse}}==1">供货来源：供应商</view>
+				<view class="content " wx:else="{{fSupplysourse}}==2">供货来源：门店仓</view>
+			</l-card>
+			<view class="text">物流配送前图片：
+				<view class="fCustImageUrls-box">
+					<block wx:for="{{item.fServerImageUrlArr}}" wx:for-item="picItem">
+						<view wx:if="{{picItem!=''}}">
+							<image class="del" data-index="{{item.fOrdServerLineID}}" data-picSrc="{{picItem}}" data-type="fServerImageUrl" ontap="delPic" src="../../imgs/icon/delPic.png"></image>
+							<image class="pic" ontap='showPic' data-picUrl="{{picItem}}" src="{{picItem}}"></image>
+						</view>
+					</block>
+				</view>
+				<l-image-picker clear="{{pickerList['fServerImageUrl'+item.fOrdServerLineID]}}" size-type="compressed" count="9" size-type="original" max-image-size="32000000" urls="['图片1.jpg','图片2.jpg','图片3.jpg']" data-index="{{item.fOrdServerLineID}}" data-picSrc="{{picItem}}" data-type="fServerImageUrl" bind:linchange="addPicure" bind:linremove="linremove" />
+				<input hidden="{{true}}" maxlength="1000" name="fServerImageUrl" value="{{item.fServerImageUrl}}"></input>
+				<button class="pay disabled" hidden="{{buttonList['fServerImageUrl'+item.fOrdServerLineID]}}" ontap="upLoadPic" data-index="{{item.fOrdServerLineID}}" data-type="fServerImageUrl">上传</button>
+			</view>
+			<view class="text">正常图片：
+				<view class="fCustImageUrls-box">
+					<block wx:for="{{item.fCustOkImageUrlArr}}" wx:for-item="picItem">
+						<view wx:if="{{picItem!=''}}">
+							<image class="del" data-index="{{item.fOrdServerLineID}}" data-picSrc="{{picItem}}" data-type="fCustOkImageUrl" ontap="delPic" src="../../imgs/icon/delPic.png"></image>
+							<image class="pic" ontap='showPic' data-picUrl="{{picItem}}" src="{{picItem}}"></image>
+						</view>
+					</block>
+				</view>
+				<l-image-picker clear="{{pickerList['fCustOkImageUrl'+item.fOrdServerLineID]}}" size-type="compressed" count="9" size-type="original" max-image-size="32000000" urls="['图片1.jpg','图片2.jpg','图片3.jpg']" data-index="{{item.fOrdServerLineID}}" data-picSrc="{{picItem}}" data-type="fCustOkImageUrl" bind:linchange="addPicure" bind:linremove="linremove" />
+				<input hidden="{{true}}" maxlength="1000" name="fCustOkImageUrl" value=""></input>
+				<button class="pay disabled" hidden="{{buttonList['fCustOkImageUrl'+item.fOrdServerLineID]}}" ontap="upLoadPic" data-index="{{item.fOrdServerLineID}}" data-type="fCustOkImageUrl">上传</button>
+			</view>
+			<view class="text">异常图片：
+				<view class="fCustImageUrls-box">
+					<block wx:for="{{item.fCustErrImageUrlArr}}" wx:for-item="picItem">
+						<view wx:if="{{picItem!=''}}">
+							<image class="del" data-index="{{item.fOrdServerLineID}}" data-picSrc="{{picItem}}" data-type="fCustErrImageUrl" ontap="delPic" src="../../imgs/icon/delPic.png"></image>
+							<image class="pic" ontap='showPic' data-picUrl="{{picItem}}" src="{{picItem}}"></image>
+						</view>
+					</block>
+				</view>
+				<l-image-picker clear="{{pickerList['fCustErrImageUrl'+item.fOrdServerLineID]}}" size-type="compressed" count="9" size-type="original" max-image-size="32000000" urls="['图片1.jpg','图片2.jpg','图片3.jpg']" data-index="{{item.fOrdServerLineID}}" data-picSrc="{{picItem}}" data-type="fCustErrImageUrl" bind:linchange="addPicure" bind:linremove="linremove" />
+				<input hidden="{{true}}" maxlength="1000" name="fCustErrImageUrl" value=""></input>
+				<button class="pay disabled" hidden="{{buttonList['fCustErrImageUrl'+item.fOrdServerLineID]}}" ontap="upLoadPic" data-index="{{item.fOrdServerLineID}}" data-type="fCustErrImageUrl">上传</button>
+			</view>
+			<view class="comment">
+				<textarea name="fFgRemark" class="textarea" placeholder="问题描述" value="{{item.fFgRemark}}"></textarea>
+			</view>
+		</view>
+	</block>
+	<button class="pay disabled" ontap='uploadPicData'>提交</button>
+	<l-popup show="{{showpopup}}" content-align="center" l-class="popcolor">
+		<image mode="widthFix" src="{{picurl}}"></image>
+	</l-popup>
+</view>

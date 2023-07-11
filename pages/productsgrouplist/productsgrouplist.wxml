@@ -1,0 +1,62 @@
+<view wx:if="{{!searching}}" class="container cart-container">
+	<view class="fixed-btns-box" bindtap="onCartTap">
+		<view class="fiexd-cart {{isShake?'animate':''}}">
+			<image src="../../imgs/icon/cart@top.png"></image>
+			<view wx:if="{{cartTotalCounts>0}}">{{cartTotalCounts}}</view>
+		</view>
+	</view>
+	
+	<view class="searchbox" bindtap="onSearching">
+		<image style="height: 50%;width: 50%;" src="../../imgs/icon/search.png" />
+	</view>
+
+	<view class="top"></view>
+
+	<block wx:if="{{cartData.length>0}}">
+		<view class="cart-box">
+			<block wx:for="{{cartData}}">
+				<view class="cart-item" bindtap="onProductsItemTap" data-fFgID="{{item.fFgID}}" data-fFgNo="{{item.fFgNo}}" data-fFgName="{{item.fFgName}}" data-btypelist="{{item.bTypeList}}" data-pSectionType="{{item.pSectionType}}" data-index="{{index}}">
+					<view class="cart-item-main" data-fFgID="{{item.fFgID}}" data-fFgNo="{{item.fFgNo}}" data-fFgName="{{item.fFgName}}" data-btypelist="{{item.bTypeList}}" data-pSectionType="{{item.pSectionType}}" data-index="{{index}}">
+						<view class="cart-item-checkbox">
+
+						</view>
+						<view class="cart-item-img" bindtap="onProductsItemTap" data-fFgNo="{{item.fFgNo}}" data-fFgName="{{item.fFgName}}" data-fFgID="{{item.fFgID}}" data-btypelist="{{item.bTypeList}}" data-pSectionType="{{item.pSectionType}}">
+							<image class="good-image" src="{{item.fImageUrl}}" mode="aspectFit" ></image>
+						</view>
+						<view class="cart-item-word">
+							<view class="title-box">
+								<text class="title">{{item.fFgName}}</text>
+							</view>
+							<view>
+								<text>NO. {{item.fFgNo}}</text>
+							</view>
+							
+							<view wx:if="{{item.pVersion != ''}}">
+								<text>Version : {{item.pVersion}}</text>
+							</view>
+							<!-- <view class="title-box">
+								<block wx:if="{{item.fDisUnitprice}}">
+									<text>{{language.lang_productsgrouplist_ListPrice}}:</text>
+									<l-price unit="$" color="#000000" del-color="#000000" deleted="{{true}}" value="{{item.fPrice}}"></l-price>
+									<text>{{language.lang_productsgrouplist_DisUnitprice}}:${{item.fDisUnitprice}}</text>
+								</block>
+								<block wx:else>
+									<text>{{language.lang_productsgrouplist_ListPrice}}:$ {{item.fPrice}}</text>
+								</block>
+							</view> -->
+						</view>
+					</view>
+				</view>
+			</block>
+		</view>
+	</block>
+	<view wx:else class="no-data">
+		{{language.nodata}}
+	</view>
+
+</view>
+<v-search bind:cancle="onCancle" wx:if="{{searching}}" />
+
+	<loading hidden="{{loadingHidden}}">
+		{{language.loading}}
+	</loading>

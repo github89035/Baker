@@ -1,0 +1,14 @@
+.radio-group {
+  width: 100%;
+}
+
+.radio-group-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.radio-group-column {
+  display: flex;
+  flex-direction: column;
+}

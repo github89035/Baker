@@ -1,0 +1,10 @@
+{
+  "enablePullDownRefresh": false,
+    "usingComponents": {
+      "l-grid": "/dist/grid/index",
+      "l-grid-item": "/dist/grid-item/index",
+      "l-icon":"/dist/icon/index",
+      "v-search": "/components/search/index",
+      "l-list":"/dist/list/index"
+    }
+}

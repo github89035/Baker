@@ -1,0 +1,69 @@
+<view wx:if="{{!searching}}" class="container cart-container">
+	<view class="fixed-btns-box" bindtap="onCartTap">
+		<view class="fiexd-cart {{isShake?'animate':''}}">
+			<image src="../../imgs/icon/cart@top.png"></image>
+			<view wx:if="{{cartTotalCounts>0}}">{{cartTotalCounts}}</view>
+		</view>
+	</view>
+	
+	<view class="searchbox" bindtap="onSearching">
+		<image style="height: 50%;width: 50%;" src="../../imgs/icon/search.png" />
+	</view>
+
+	<view class="top"></view>
+
+	<block wx:if="{{cartData.length>0}}">
+		<view class="cart-box">
+			<block wx:for="{{cartData}}">
+				<view class="cart-item" bindtap="onProductsItemTap" data-fFgID="{{item.fFgID}}" data-fFgNo="{{item.fFgNo}}" data-fFgName="{{item.fFgName}}" data-fStyleNum="{{item.fStyleNum}}" data-fItem_Size="{{item.fItem_Size}}" data-pSectionType="{{item.pSectionType}}" data-index="{{index}}">
+					<view class="cart-item-main" data-fFgID="{{item.fFgID}}" data-index="{{index}}">
+						<view class="cart-item-checkbox">
+
+						</view>
+						<view class="cart-item-img" bindtap="onProductsItemTap" data-fFgID="{{item.fFgID}}">
+							<image class="good-image" src="{{item.fImageUrl}}" mode="aspectFit" ></image>
+						</view>
+						<view class="cart-item-word">
+							<view class="title-box">
+								<text class="title">{{item.fFgName}}</text>
+							</view>
+							<view>
+								<text>NO. {{item.fFgNo}}</text>
+							</view>
+							<view style="text-align: right;">
+								<!-- <block wx:if="{{item.fStyle_Type==''}}"> -->
+									<!-- <text>{{language.lang_productsgrouplist_Option}}: {{language.lang_productsgrouplist_STANDARD}}</text> -->
+									<!-- <text></text>
+									<text wx:if="{{item.fItem_Size!=''}}">
+										{{language.lang_productsgrouplist_Size}}: {{item.fItem_Size_Metric}}
+									</text>
+								</block> -->
+								<text wx:if="{{item.fItem_Size!=''}}">
+									{{language.lang_productsgrouplist_Size}}: {{item.fItem_Size_Metric}}
+								</text>
+								<text wx:else></text>
+								<!-- <block wx:elif="{{item.fStyle_Type=='OPTIONAL'}}">
+									<text>{{language.lang_productsgrouplist_Option}}: {{item.fStyle_Type}}</text>
+									<text wx:if="{{item.fItem_Size!=''}}">
+										{{language.lang_productsgrouplist_Size}}: {{item.fItem_Size_Metric}}
+									</text>
+								</block>
+								<block wx:else>
+									<text>{{language.lang_productsgrouplist_Option}}: {{item.fStyle_Type}}</text>
+									<text wx:if="{{item.fItem_Size!=''}}">
+										{{language.lang_productsgrouplist_Size}}: {{item.fItem_Size_Metric}}
+									</text>
+								</block> -->
+							</view>
+						</view>
+					</view>
+				</view>
+			</block>
+		</view>
+	</block>
+	<view wx:else class="no-data">
+		{{language.nodata}}
+	</view>
+
+</view>
+<v-search bind:cancle="onCancle" wx:if="{{searching}}" />

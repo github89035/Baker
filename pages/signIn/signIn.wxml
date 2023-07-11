@@ -1,0 +1,27 @@
+<view class="container">
+  <view class="login-icon">
+    <open-data type="userAvatarUrl"></open-data>
+    <!-- <open-data type="userNickName"></open-data> -->
+    <!-- <image class="login-img" src="../../imgs/icon/user@default.png"></image> -->
+  </view>
+  <view class="login-from">
+    <!--账号-->
+    <view class="inputView">
+      <image class="nameImage" src="../../imgs/icon/account.png"></image>
+      <label class="loginLab">帳號</label>
+      <input class="inputText" placeholder="請輸入帳號" bindinput="usernameInput" />
+    </view>
+    <view class="line"></view>
+    <!--密码-->
+    <view class="inputView">
+      <image class="keyImage" src="../../imgs/icon/password.png"></image>
+      <label class="loginLab">密碼</label>
+      <input class="inputText" password="true" placeholder="請輸入密碼" bindinput="passwordInput" />
+    </view>
+    <!--按钮-->
+
+    <view class="loginBtnView">
+      <button class="loginBtn" type="primary" size="{{primarySize}}" loading="{{loading}}" plain="{{plain}}" disabled="{{disabled}}" bindtap="login">登入</button>
+    </view>
+  </view>
+</view>

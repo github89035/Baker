@@ -1,0 +1,213 @@
+<view class="container cart-container">
+  <block wx:if="{{cartData.length>0}}">
+    <view class="cart-box">
+
+      <block wx:for="{{cartData}}" wx:for-item="carItemName">
+
+      </block>
+
+      <view class="item-box">
+        <block wx:for="{{brandData}}" wx:for-item="brandDataItem">
+          <view>{{language.lang_cart_BrandCategory}}：{{brandDataItem.Brand_Category}} </view>
+          <block wx:for="{{cartData}}" wx:for-index="CartIndex">
+            <block wx:if="{{brandDataItem.Brand_Category==item.Brand_Category}}">
+              <view class="cart-item {{deleteFlag&&index==currentIndex?'showDeleteBtn':'hideDeleteBtn'}}">
+                <view class="cart-item-main" data-Item_No="{{item.Item_No}}" data-index="{{index}}">
+                  <view class="cart-item-checkbox" ontap="toggleSelect"
+                  data-Item_No="{{item.Item_No}}"
+                  data-Item_No_Prefix="{{item.Item_No_Prefix}}"
+                  data-Product_Name="{{item.Product_Name}}"
+                  data-StyleNo="{{item.StyleNo}}"
+                  data-FinishTexture="{{item.FinishTexture}}"
+                  data-StyleTexture="{{item.StyleTexture}}"
+                  data-OptionS="{{item.OptionS}}"
+                  data-SetSize="{{item.SetSize}}"
+                  data-PillowS="{{item.PillowS}}"
+                  data-InventoryData="{{item.InventoryData}}"
+                  data-InventoryFL="{{item.InventoryFL}}"
+                  data-InventoryLimit="{{item.InventoryLimit}}"
+                  data-InventoryWood="{{item.InventoryWood}}"
+                  data-status="{{item.selectStatus}}">
+                    <image wx:if="{{item.selectStatus}}" src="../../imgs/icon/circle@selected.png"></image>
+                    <image wx:else src="../../imgs/icon/circle@noselected.png"></image>
+                  </view>
+                  <view class="cart-item-img" bindtap="onProductsItemTap"
+                  data-pSectionType="{{item.pSectionType}}"
+                  data-Item_No="{{item.Item_No}}"
+                  data-Item_No_Prefix="{{item.Item_No_Prefix}}"
+                  data-Product_Name="{{item.Product_Name}}"
+                  data-StyleNo="{{item.StyleNo}}"
+                  data-FinishTexture="{{item.FinishTexture}}"
+                  data-Finish2Texture="{{item.Finish2Texture}}"
+                  data-StyleTexture="{{item.StyleTexture}}"
+                  data-OptionS="{{item.OptionS}}"
+                  data-SetSize="{{item.SetSize}}"
+                  data-PillowS="{{item.PillowS}}"
+                  data-InventoryData="{{item.InventoryData}}"
+                  data-InventoryFL="{{item.InventoryFL}}"
+                  data-InventoryLimit="{{item.InventoryLimit}}"
+                  data-InventoryWood="{{item.InventoryWood}}">
+                    <image class="good-image" src="{{item.fImageUrl}}" mode="aspectFit"></image>
+                  </view>
+                  <view class="cart-item-word">
+                    <view>
+                      <text>{{item.Product_Name}}</text>
+                    </view>
+                    <view>
+                      <text>NO：</text>
+                      <text>{{item.Item_No_Prefix}}</text>
+                      <text hidden="{{func.isNull(item.InventoryData)}}">(庫存商品)</text>
+                    </view>
+                    <!-- <view>
+                      <text wx:if="{{item.Level}}">{{language.lang_cart_itemlevel}}：{{item.Level}}</text> -->
+                      <!-- <text>供貨來源：</text>
+                      <text>供應商</text> -->
+                      <!-- <text wx:if="{{item.source==2}}">門店倉</text> -->
+                    <!-- </view> -->
+                    <view>
+                      <text> 牌價 NT$ {{func.ToPriceStr(item.List_Price)}} /{{language.lang_cart_counttype}}</text>
+                    </view>
+                    <!-- <view>
+                      <text> 運費+組裝費 NT$ {{item.bShip?(func.ToPriceStr(item.pShippingPrice)):'0'}} /{{language.lang_cart_counttype}}</text>
+                    </view>
+                    <view>
+                      <text> 設計服務費 NT$ {{item.bDesign?(func.ToPriceStr(item.pDesignPrice)):'0'}} /{{language.lang_cart_counttype}}</text>
+                    </view> -->
+                    <view hidden="{{func.isNull(item.SetSize)}}">
+                      <text> 客制化尺寸：{{item.SetSize}} CM</text>
+                    </view>
+                    <view class="item_FinishView" hidden="{{func.isNull(item.FinishTypeName)}}">
+                      <text> 木材  級數：{{item.FinishTypeName}}</text>
+                      <text wx:if="{{item.FinishName != ''}}" style="margin-left: 34px;">料名：{{item.FinishName}}</text>
+                    </view>
+                    <view class="item_FinishView" hidden="{{func.isNull(item.Finish2Name)}}">
+                      <text> 金工 料名：{{item.Finish2Name}}</text>
+                    </view>
+                    <view class="item_StyleView" hidden="{{func.isNull(item.StyleTypeName)}}">
+                      <text> 皮布  材質：{{item.StyleTypeName}}</text>
+                      <text style="margin-left: 34px;">級數：{{item.Level}}</text>
+                      <text style="margin-left: 34px;">料號：{{item.StyleNoName}}</text>
+                    </view>
+                    <view class="item_FinishView" hidden="{{func.isNull(item.InventoryWood)}}">
+                      <text> 木材  料名：{{item.InventoryWood}}</text>
+                    </view>
+                    <view class="item_FinishView" hidden="{{func.isNull(item.InventoryFL)}}">
+                      <text> 皮布  料號：{{item.InventoryFL}}</text>
+                    </view>
+                    <view class="bottom-box">
+                      <view class="cart-item-counts">
+                        <view class="btns {{item.counts==1?'disabled':''}}" bindtap="changeCounts"
+                        data-Item_No="{{item.Item_No}}"
+                        data-Item_No_Prefix="{{item.Item_No_Prefix}}"
+                        data-Product_Name="{{item.Product_Name}}"
+                        data-StyleNo="{{item.StyleNo}}"
+                        data-FinishTexture="{{item.FinishTexture}}"
+                        data-StyleTexture="{{item.StyleTexture}}"
+                        data-OptionS="{{item.OptionS}}"
+                        data-SetSize="{{item.SetSize}}"
+                        data-PillowS="{{item.PillowS}}"
+                        data-InventoryData="{{item.InventoryData}}"
+                        data-InventoryFL="{{item.InventoryFL}}"
+                        data-InventoryLimit="{{item.InventoryLimit}}"
+                        data-InventoryWood="{{item.InventoryWood}}"
+                        data-type="cut">-</view>
+                        <view class="counts">{{item.counts}}</view>
+                        <view class="btns" bindtap="changeCounts"
+                        data-Item_No="{{item.Item_No}}"
+                        data-Item_No_Prefix="{{item.Item_No_Prefix}}"
+                        data-Product_Name="{{item.Product_Name}}"
+                        data-StyleNo="{{item.StyleNo}}"
+                        data-FinishTexture="{{item.FinishTexture}}"
+                        data-StyleTexture="{{item.StyleTexture}}"
+                        data-OptionS="{{item.OptionS}}"
+                        data-SetSize="{{item.SetSize}}"
+                        data-PillowS="{{item.PillowS}}"
+                        data-InventoryData="{{item.InventoryData}}"
+                        data-InventoryFL="{{item.InventoryFL}}"
+                        data-InventoryLimit="{{item.InventoryLimit}}"
+                        data-InventoryWood="{{item.InventoryWood}}"
+                        data-type="add">+</view>
+                      </view>
+                      <view class="delete"
+                      data-Item_No="{{item.Item_No}}"
+                      data-Item_No_Prefix="{{item.Item_No_Prefix}}"
+                      data-Product_Name="{{item.Product_Name}}"
+                      data-StyleNo="{{item.StyleNo}}"
+                      data-FinishTexture="{{item.FinishTexture}}"
+                      data-StyleTexture="{{item.StyleTexture}}"
+                      data-OptionS="{{item.OptionS}}"
+                      data-SetSize="{{item.SetSize}}"
+                      data-PillowS="{{item.PillowS}}"
+                      data-InventoryData="{{item.InventoryData}}"
+                      data-InventoryFL="{{item.InventoryFL}}"
+                      data-InventoryLimit="{{item.InventoryLimit}}"
+                      data-InventoryWood="{{item.InventoryWood}}"
+                      bindtap="delete">×</view>
+                    </view>
+                  </view>
+                </view>
+                <image wx:if="{{CartIndex != cartData.length - 1}}" class="exchange" src="../../imgs/icon/exchange.png" data-index="{{item.CartIndex}}" bindtap="exchange"></image>
+              </view>
+            </block>
+          </block>
+        </block>
+      </view>
+    </view>
+
+    <view class="footer-account-box all-accounts-box">
+      <view class="all-select" ontap="toggleSelectAll" data-status="{{selectedTypeCounts==cartData.length?'true':'false'}}">
+        <image wx:if="{{selectedTypeCounts==cartData.length}}" class="title-icon" src="../../imgs/icon/circle@selected.png"></image>
+        <image wx:else class="title-icon" src="../../imgs/icon/circle@noselected.png"></image>
+        <text>{{language.lang_cart_selectedCounts}}({{selectedCounts}})</text>
+      </view>
+      <view class="all-price-submit {{account==0?'disabled':''}}" >
+        <!-- <view class="accounts-btn">{{language.lang_cart_accounts}}：</view> -->
+        <view class="price-text">NT${{priceStr}}</view>
+        <view class="arrow-icon" bindtap="submitCart" style="margin-right:2rpx;">儲存</view>
+        <view class="arrow-icon" bindtap="submitOrder">
+          {{language.lang_cart_submitOrder}}
+        </view>
+      </view>
+    </view>
+  </block>
+  <view wx:else class="no-data">
+    {{language.lang_cart_nodata}}
+  </view>
+  <loading hidden="{{loadingHidden}}">
+    {{language.loading}}
+  </loading>
+</view>
+
+<wxs module="func">
+      module.exports = {
+        ToPriceStr: function (e) {
+          //console.log('num',e);
+          var tmpNum = e.toString();
+          var tmpStr = '';
+          var strIndex = 0;
+          for (var i = (tmpNum.length - 1); i >= 0; i--) {
+            if(((strIndex % 3) == 0) && (strIndex != 0))
+            {
+              tmpStr = tmpNum[i] + "," + tmpStr;
+            }
+            else
+            {
+              tmpStr = tmpNum[i] + tmpStr;
+            }
+
+            strIndex = strIndex + 1;
+          }
+
+          //console.log('num', tmpStr);
+
+          return tmpStr;
+        },
+        isNull: function (e) {
+          if(e == null) return true;
+          if(e == '') return true;
+          if(e == undefined) return true;
+
+          return false;
+        }
+      }
+</wxs> 

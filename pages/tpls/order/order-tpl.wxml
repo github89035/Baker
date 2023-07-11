@@ -1,0 +1,71 @@
+<template name="CustomBox">
+    <view class="Custom_my-order">
+        <view class="Custom_item-title">
+            <view class="Custom_station">
+                <view class='Custom_select_box'>
+                    <view class='Custom_select' catchtap='selectTap'>
+                        <text class='Custom_select_text' wx-if="{{!Customhadselect}}">請選擇條件</text>
+                        <text class='Custom_select_text'  wx:else>{{Custom_selectData[CustomIndex].text}}</text>
+                        <image class='Custom_select_img {{CustomShow&&"select_img_rotate"}}' src='/imgs/icon/arrow@right.png'></image>
+                    </view>
+                    <!-- 选项框高度控制 没有点击则为0，有点击根据选项确定-->
+                    <view class='Custom_option_box' style='height:{{CustomShow?(Custom_selectData.length>5?300:Custom_selectData.length*60):0}}rpx;z-index:100;'>
+                        <text class='Custom_option' style='{{CustomIndex==Custom_selectData.length-1&&"border:0;"}}' wx:for='{{Custom_selectData}}' wx:key='this' data-index='{{index}}' data-value='{{item.value}}'   catchtap='optionTap'>{{item.text}}</text>
+                    </view>
+                </view>
+                <view class='Custom_search'>
+                    <view>
+                        <input type='text' placeholder='請輸入關鍵字' bindinput='getInput' bindconfirm='confirm' />
+                    </view>
+                    <view data-keyword="{{CustomKeyword}}" data-searchType="{{CustomIndex}}" ontap="searchOrder" style="width:50rpx;height:50rpx;">
+                        <icon type='search' class='icons'></icon>
+                    </view>
+                </view>
+            </view>
+        </view>
+        <view class="Custom_item-main">
+            <!-- <view class="top"></view> -->
+            <block wx:for="{{CustomList}}">
+                <view class="Custom_order-item" ontap="SetOrderCustom" data-index="{{index}}" data-pCustomUID="{{item.pCustomUID}}" data-pSecurityCode="{{item.pSecurityCode}}">
+                    <view class="Custom_order-main">
+                        <!-- <view class="Custom_item-left">
+                            <image src="../../imgs/icon/user@default.png"></image>
+                        </view> -->
+                        <view class="Custom_item-middle">
+                            <view>
+                                <text>客戶姓名:</text>
+                                <text class="Custom_order-no-txt" wx:if="{{item.pCustomSex==1}}">{{item.pCustomName}} 先生</text>
+                                <text class="Custom_order-no-txt" wx:if="{{item.pCustomSex==2}}">{{item.pCustomName}} 女士</text>
+                                <!-- <text class="Custom_order-no-txt">{{item.pCustomName}}</text> -->
+                            </view>
+                            <view>
+                                <text>家用電話:</text>
+                                <text class="Custom_order-no-txt">{{item.pCustomHomeNumber}}</text>
+                            </view>
+                            <view>
+                                <text>手機號碼:</text>
+                                <text class="Custom_order-no-txt">{{item.pCustomPhoneNumber}}</text>
+                            </view>
+                            <!-- <view>
+                                <text>稱呼:</text>
+                                <text class="Custom_order-no-txt" wx:if="{{item.pCustomSex==1}}">先生</text>
+                                <text class="Custom_order-no-txt" wx:if="{{item.pCustomSex==2}}">女士</text>
+                            </view> -->
+                            <view>
+                                <text>地址:</text>
+                                <text class="Custom_order-no-txt">{{item.pCustomAddress}}</text>
+                            </view>
+                        </view>
+                    </view>
+                </view>
+            </block>
+            <!-- <l-icon class="Custom_icon" name="add" color="#FF4D40" size="80" bindtap="goToAddCustomerFlow" /> -->
+        </view>
+        <view class="Custom_item-bottom">
+            <!-- <view class="Custom_lBtn" bindtap="goToAddCustomerFlow">新增</view> -->
+            <view class="Custom_lBtn" bindtap="ClearCustomObj">清除</view>
+            <!-- <l-icon class="Custom_icon" name="add" color="#FF4D40" size="80" bindtap="goToAddCustomerFlow" /> -->
+            <view class="Custom_rBtn" bindtap="OpenCustomList">返回</view>
+        </view>
+    </view>
+</template>

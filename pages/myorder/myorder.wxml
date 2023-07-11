@@ -1,0 +1,108 @@
+  <view class="my-order">
+  	<!-- <view class="fixed-btns-box" bindtap="onCartTap">
+  		<view class="fiexd-cart {{isShake?'animate':''}}">
+  			<image src="../../imgs/icon/cart@top.png"></image>
+  			<view wx:if="{{cartTotalCounts>0}}">{{cartTotalCounts}}</view>
+  		</view>
+  	</view> -->
+  	<view class="item-title">
+  		<view class="station">
+  			<view class='select_box'>
+  				<view class='select' catchtap='selectTap'>
+
+  					<text class='select_text' wx-if="{{!hadselect}}">{{language.lang_myorder_search_title}}</text>
+  					<text class='select_text'  wx:else>{{selectData[index].text}}</text>
+
+  					<image class='title-image {{show&&"select_img_rotate select_img"}}' src='/imgs/icon/arrow@right.png'></image>
+  				</view>
+  				<!-- 选项框高度控制 没有点击则为0，有点击根据选项确定-->
+  				<view class='option_box' style='height:{{show?(selectData.length>5?300:selectData.length*60):0}}rpx;z-index:100;'>
+  					<text class='option' style='{{index==selectData.length-1&&"border:0;"}}' wx:for='{{selectData}}' wx:key='this' data-index='{{index}}' data-value='{{item.value}}'   catchtap='optionTap'>{{item.text}}</text>
+  				</view>
+  			</view>
+  			<view class='search'>
+  				<view>
+  					<input type='text' placeholder='{{language.lang_myorder_search_text}}' bindinput='getInput' bindconfirm='confirm' />
+  				</view>
+  				<view data-keyword="{{keyword}}" data-searchType="{{index}}" ontap="searchOrder" style="width:50rpx;height:50rpx;">
+  					<icon type='search' class='icons'></icon>
+  				</view>
+  			</view>
+  		</view>
+  	</view>
+  	<view class="item-main">
+  		<view class="top"></view>
+  		<block wx:for="{{orderArr}}">
+  			<view class="order-item">
+  				<view class="order-header" ontap="showOrderDetailInfo" data-OrderID="{{item.OrderID}}">
+  					<text>{{language.lang_myorder_orderid}}：</text>
+  					<text class="order-no-txt">{{item.OrderID}}</text>
+  				</view>
+  				<view class="order-header order-customer" ontap="showOrderDetailInfo" data-OrderID="{{item.OrderID}}">
+  					<view>
+  						<text>{{language.lang_myorder_customname}}：</text>
+  						<text class="order-no-txt">{{item.CustomName}}</text>
+  					</view>
+  					<view style="margin-left:20rpx;">
+  						<text>{{language.lang_myorder_customphone}}：</text>
+  						<text class="order-no-txt">{{item.CustomPhone}}</text>
+  					</view>
+  				</view>
+  				<view class="order-main" ontap="showOrderDetailInfo" data-OrderID="{{item.OrderID}}">
+						<block wx:for="{{item.m_OrderItemS}}" wx:for-item="orderitem">
+							<view class="item-left">
+								<image src="{{orderitem.fImageUrl}}" mode="aspectFit"></image>
+							</view>
+						</block>
+  					<view class="item-middle">
+  						<view>{{orderitem.Product_Name}}</view>
+  						<view>{{orderitem.counts}}</view>
+  					</view>
+  					<!-- <view class="item-right">
+  						<text class="order-status-txt unpay" wx:if="{{item.fcFlag==0}}">新建</text>
+  						<text class="order-status-txt payed" wx:if="{{item.fcFlag==3}}">已審核</text>
+  						<text class="order-status-txt done" wx:if="{{item.fcFlag==5}}">已關閉</text>
+  					</view> -->
+  				</view>
+  				<view class="order-bottom">
+  					<text>{{language.lang_myorder_realprice}}：NT$ {{func.ToPriceStr(item.FullList_Price)}}</text>
+  					<!-- <view class="pay" ontap="rePay" data-OrderID="{{item.OrderID}}" data-index="{{index}}">線下付款</view> -->
+  					<block wx:if="{{roleNo==100}}">
+  						<view class="pay" wx:if="{{item.fcFlag==0}}" data-OrderID="{{item.OrderID}}" data-index="{{index}}" ontap="orderReview">{{language.lang_myorder_orderverify}}</view>
+  					</block>
+  				</view>
+  			</view>
+  		</block>
+  	</view>
+  </view>
+
+  <wxs module="func">
+      module.exports = {
+        ToPriceStr: function (e) {
+          if(e == undefined) return '';
+
+          var tmpNum = e.toString();
+          var tmpStr = '';
+          var strIndex = 0;
+          for (var i = (tmpNum.length - 1); i >= 0; i--) {
+            if(((strIndex % 3) == 0) && (strIndex != 0))
+            {
+              tmpStr = tmpNum[i] + "," + tmpStr;
+            }
+            else
+            {
+              tmpStr = tmpNum[i] + tmpStr;
+            }
+
+            strIndex = strIndex + 1;
+          }
+          return tmpStr;
+        },
+        ToSale: function(e,x) {
+          var tmpPrice = parseInt(e);
+          var tmpSale = parseInt(x);
+
+          return tmpPrice * (1 - (tmpSale / 100));
+        }
+      }
+</wxs> 

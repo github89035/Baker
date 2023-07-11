@@ -1,0 +1,19 @@
+<!--pages/salesCommission/withdrawResult.wxml-->
+
+<view class="container">
+	<view class="result">
+		<image class="imgsize" src="../../imgs/icon/pay@success.png"></image>
+		<view wx:if="{{type==1}}" class="font-color-999 margin-top-30">訂單號：{{orderid}}</view>
+		<view wx:if="{{operation==1}}" class="font-color-c24e4e margin-top-30">提交成功</view>
+		<view wx:if="{{operation==2}}" class="font-color-c24e4e margin-top-30">修改成功</view>
+	</view>
+	
+	<view class="goBack">
+		<view class="butbox" style="margin-top:40rpx;">
+			<view bindtap="backHome" class="but bg-color-c24e4e font-color-white">返回主頁</view>
+		</view>
+		<view class="butbox" style="margin-top:40rpx;margin-left:10rpx;">
+			<view wx:if="{{type==1}}" data-type="{{type}}" bindtap="backListPage" class="but bg-color-c24e4e font-color-white">返回列表页</view>
+		</view>
+	</view>
+</view>

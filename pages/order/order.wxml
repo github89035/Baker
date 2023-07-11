@@ -1,0 +1,546 @@
+<import src="../tpls/order/order-tpl.wxml" />
+
+<view hidden="{{!bCustomBox}}" class="TipBox">
+  <template is="CustomBox" data="{{CustomList,CustomShow,Custom_selectData,Customhadselect,CustomIndex,CustomKeyword}}" />
+</view>
+
+<!--订单详情-->
+<view class="container order-container" hidden="{{bCustomBox}}">
+	<!--订单编号和下单时间，如果是旧订单就显示-->
+	<view class="order-basic-info" wx:if="{{basicInfo}}">
+		<view class="order-time-no">
+			<view>
+				<view>
+					<text class="key">{{language.lang_order_ordertime}}：</text>
+					<text class="val">{{basicInfo.orderTime}}</text>
+				</view>
+				<view>
+					<text class="key">{{language.lang_order_orderno}}：</text>
+					<text class="order-no-txt val">{{basicInfo.orderNo}}</text>
+				</view>
+				<view>
+					<text class="key">{{language.lang_order_ordertype}}：</text>
+					<text class="order-status-txt unpay" wx:if="{{basicInfo.fcFlag==0}}">{{language.lang_order_ordertype_new}}</text>
+					<text class="order-status-txt payed" wx:if="{{basicInfo.fcFlag==3}}">{{language.lang_order_ordertype_payed}}</text>
+					<text class="order-status-txt done" wx:if="{{basicInfo.fcFlag==5}}">{{language.lang_order_ordertype_done}}</text>
+				</view>
+			</view>
+			<!-- <view class="pay" ontap="rePay" wx:if="{{basicInfo.fcFlag==0}}" data-fOrdID="{{item.fOrdID}}" data-index="{{index}}" ontap="orderReview">訂單審核</view> -->
+		</view>
+
+	</view>
+	<!--客流登記表-->
+	<view wx:if="{{revise==false}}" class="order-address-info {{orderStatus!=0?'disabled':''}}" ontap="OpenCustomList">
+		<block wx:if="{{addressInfo}}">
+			<view class="contact-box">
+				<view>
+					<view class="contact">
+						<view>
+							<image src="../../imgs/icon/user.png"></image>
+							<text class="val">{{addressInfo.name}}</text>
+						</view>
+						<view class="mobile-box">
+							<image src="../../imgs/icon/mobile.png"></image>
+							<text class="val mobile-text">{{addressInfo.mobile}}</text>
+						</view>
+					</view>
+					<view class="detail">{{addressInfo.totalDetail}}</view>
+				</view>
+				<view class="contact-icon" wx:if="{{orderStatus==0}}">
+					<image src="../../imgs/icon/arrow@right.png"></image>
+				</view>
+			</view>
+		</block>
+		<block wx:else>
+			<view class="add-new-address">
+				<!-- <text class="icon">+</text> -->
+				<text>客流登記表</text>
+			</view>
+		</block>
+	</view>
+	<!--地址-->
+	<!-- <view class="order-address-info {{orderStatus!=0?'disabled':''}}" ontap="editAddress">
+		<block wx:if="{{addressInfo}}">
+			<view class="contact-box">
+				<view>
+					<view class="contact">
+						<view>
+							<image src="../../imgs/icon/user.png"></image>
+							<text class="val">{{addressInfo.name}}</text>
+						</view>
+						<view class="mobile-box">
+							<image src="../../imgs/icon/mobile.png"></image>
+							<text class="val mobile-text">{{addressInfo.mobile}}</text>
+						</view>
+					</view>
+					<view class="detail">{{addressInfo.totalDetail}}</view>
+				</view>
+				<view class="contact-icon" wx:if="{{orderStatus==0}}">
+					<image src="../../imgs/icon/arrow@right.png"></image>
+				</view>
+			</view>
+		</block>
+		<block wx:else>
+			<view class="add-new-address">
+				<text class="icon">+</text>
+				<text>添加地址</text>
+			</view>
+		</block>
+	</view> -->
+	<!--列表-->
+	<view class="order-main">
+		<block wx:for="{{productsArr}}">
+			<view class="product-item">
+				<view class="item-left">
+					<image src="{{item.fImageUrl}}" mode="aspectFit"></image>
+				</view>
+				<view class="item-middle">
+					<view class="fFgNameAndCount">
+						<view>{{language.lang_order_product_name}}：{{item.Product_Name}}</view>
+						<!-- <view wx:if="{{entrance=='list'}}" class="item-right">
+							×{{item.fQuantity}}
+						</view>
+						<view class="item-right" wx:else>
+							×{{item.counts}}
+						</view> -->
+					</view>
+					<view class="item-margin">{{language.lang_order_product_prefix}}：{{item.Item_No_Prefix}}<text hidden="{{func.isNull(item.InventoryData)}}">(庫存商品)</text></view>
+					<view class="item-margin">{{language.common_counts}}：{{item.counts}}</view>
+					<!-- <block wx:if="{{entrance=='list'}}">
+						<block wx:if="{{roleNo==100}}">
+							<text style="display:block">經銷價：{{item.fPurPriunitprice}}</text>
+						</block>
+						<text>成交金额￥{{item.fSalunitprice}} 折扣：{{item.fPridiscount}}</text>
+					</block>
+					<block wx:else> -->
+						<view wx:if="{{!revise}}" class="item-margin">
+							<text>{{language.lang_order_listprice}}：</text>
+							NT$<text style="text-decoration: {{func.saleFunc(sales) != '' ? 'line-through' : 'none'}};text-decoration-color:{{func.saleFunc(sales) != '' ? '#93312e' : ''}};">{{func.ToPriceStr(item.List_Price)}}</text>
+							<text wx:if="{{func.saleFunc(sales) != ''}}" style="margin-left:10rpx;color: #93312e;">{{func.ToPriceStr(item.List_Price * salediscount)}}</text>
+						</view>
+						<view wx:else class="item-margin">
+							<text>{{language.lang_order_listprice}}：</text>
+							NT$<text style="text-decoration: {{item.pSale != 0 ? 'line-through' : 'none'}};text-decoration-color:{{Order_Code_Sale != '' ? '#93312e' : ''}};">{{func.ToPriceStr(item.List_Price)}}</text>
+							<text wx:if="{{item.pSale != 0}}" style="margin-left:10rpx;color: #93312e;">{{func.ToPriceStr(item.List_Price-item.pSale)}}</text>
+						</view>
+
+						<!-- <view class="item-margin">運費+組裝費：NT${{item.bShip?(func.ToPriceStr(item.pShippingPrice)):'0'}}</view> -->
+						<!-- <view class="item-margin">設計服務費：NT${{item.bDesign?(func.ToPriceStr(item.pDesignPrice)):'0'}}</view> -->
+						<!-- <view class="item-margin">設計服務費：NT${{item.bDesign?(func.ToPriceStr(item.pShippingPrice)):'0'}}</view> -->
+						<view class="item_FinishView" hidden="{{func.isNull(item.FinishTypeName)}}">
+							<text> 木材  級數：{{item.FinishTypeName}}</text>
+							<text wx:if="{{item.FinishName != ''}}" style="margin-left: 34px;">料名：{{item.FinishName}}</text>
+						</view>
+						<view class="item_FinishView" hidden="{{func.isNull(item.Finish2Name)}}">
+							<text> 金工 料名：{{item.Finish2Name}}</text>
+						</view>
+						<view class="item_StyleView" hidden="{{func.isNull(item.StyleTypeName)}}">
+							<text> 皮布  材質：{{item.StyleTypeName}}</text>
+							<text style="margin-left: 34px;">級數：{{item.Level}}</text>
+							<text style="margin-left: 34px;">料號：{{item.StyleNoName}}</text>
+						</view>
+						<view class="item_FinishView" hidden="{{func.isNull(item.InventoryWood)}}">
+							<text> 木材  料名：{{item.InventoryWood}}</text>
+						</view>
+						<view class="item_FinishView" hidden="{{func.isNull(item.InventoryFL)}}">
+							<text> 皮布  料號：{{item.InventoryFL}}</text>
+						</view>
+						<!-- <text> 折扣：{{discount}}  </text> -->
+					<!-- </block> -->
+					
+					<!-- 供貨來源 -->
+					<!-- <view class="aftersale item-margin">{{language.lang_order_supply}}：
+						<block wx:if="{{entrance=='list'}}">
+							<text wx:if="{{item.fSupplysourse==1}}">供应商</text>
+							<text wx:if="{{item.fSupplysourse==2}}">门店仓</text>
+						</block>
+						<block wx:else>
+							<text wx:if="{{item.source==1}}">供应商</text>
+							<text wx:if="{{item.source==2}}">门店仓</text>
+						</block>
+						<text>{{language.lang_order_supplytype1}}</text>
+
+						<block wx:if="{{item.OrderItemType=='0'}}">
+							<text style="color:red;" class="button-class">{{language.common_alreadycancel}}</text>
+						</block>
+						<block wx:else>
+							<l-button class="button-class" wx:if="{{entrance=='list'}}" fOrdID data-fOrdID="{{item.OrderID}}" data-orderNo="{{basicInfo.orderNo}}" data-customername="{{addressInfo.name}}" data-mobile="{{addressInfo.mobile}}" data-fFgName="{{item.Product_Name}}" data-fFgNo="{{item.Item_No_Prefix}}" data-fImageUrl="{{item.fImageUrl}}" data-fQuantity="{{item.fQuantity}}" data-fSalunitprice="{{item.fSalunitprice}}" data-fSupplysourse="{{item.fSupplysourse}}" data-fFgID="{{item.Item_No}}" data-fFormindex="{{index}}" size='min' bgColor='#B42F2D' bindtap='cancle'>{{language.lang_order_cancel}}</l-button>
+						</block>
+					</view> -->
+
+					<!-- <view class="aftersale item-margin">
+						<text wx:if="{{entrance=='list'}}" style="color:red;display:inline-block;">交期：{{DeliveryDate}}</text>
+						<l-button class="button-class" wx:if="{{entrance=='list'}}" fOrdID data-fOrdID="{{fOrdID}}" data-orderNo="{{basicInfo.orderNo}}" data-customername="{{addressInfo.name}}" data-mobile="{{addressInfo.mobile}}" data-fFgName="{{item.fFgName}}" data-fFgNo="{{item.fFgNo}}" data-fImageUrl="{{item.fImageUrl}}" data-fQuantity="{{item.fQuantity}}" data-fSalunitprice="{{item.fSalunitprice}}" data-fSupplysourse="{{item.fSupplysourse}}" data-fFgID="{{item.fFgID}}" data-fFormindex="{{item.fFormindex}}" size='min' bgColor='#B42F2D' bindtap='goToReturnOrder'>申請售後</l-button>
+					</view> -->
+
+				</view>
+			</view>
+		</block>
+	</view>
+	<!-- 确认信息 -->
+	<!-- <view wx:if="{{entrance=='list'}}"> -->
+	<!-- <form bindsubmit="updateOrderSubmit"> -->
+	<!-- </view>
+	<view wx:else> -->
+	<form bindsubmit="orderFormSubmit">
+		<!-- </view> -->
+		<view style="background-color:#FFF">
+			<view class="row input-text">
+				<label>{{language.lang_order_customname}}：</label>
+				<input name='customname' class="radio input" placeholder="客戶名稱" value="{{CustomName?CustomName:''}}" disabled="true"></input>
+			</view>
+			<view class="row input-text">
+				<label>{{language.lang_order_customphone}}：</label>
+				<input name='customphone' class="radio input" placeholder="電話" value="{{CustomPhone?CustomPhone:''}}" disabled="true"></input>
+			</view>
+			<view class="row input-text">
+				<label>{{language.lang_order_customemail}}：</label>
+				<input name='customemail' class="radio input" placeholder="信箱" value="{{CustomEmail?CustomEmail:''}}" disabled="true"></input>
+			</view>
+			<view class="row input-text">
+				<label>{{language.lang_order_offerdate}}：</label>
+				<picker mode="date" value="{{offerdate}}" start="0000-00-01" end="3000-09-01" bindchange="onofferdate">
+					<view class="picker radio input" style="height:44rpx;text-align:left" placeholder="報價日期">{{OfferDate}}</view>
+					<input hidden="{{true}}" name='offerdate' class="radio input" placeholder="報價日期" value="{{OfferDate}}"></input>
+				</picker>
+			</view>
+			<view class="row input-text">
+				<label>{{language.lang_order_customaddress}}：</label>
+				<input name='customaddress' class="radio input" placeholder="案場地址" value="{{CustomAddress?CustomAddress:''}}" disabled="true"></input>
+			</view>
+			<view class="row input-text">
+				<label>{{language.lang_order_deliverydate}}：</label>
+				<picker mode="date" value="{{deliverydate}}" name="deliverydate" start="0000-00-01" end="3000-09-01" bindchange="ondeliverydate">
+					<view class="picker radio input" style="height:44rpx;text-align:left" placeholder="預計交貨日期">{{DeliveryDate}}</view>
+					<input hidden="{{true}}" name='deliverydate' class="radio input" placeholder="預計交貨日期" value="{{DeliveryDate}}"></input>
+				</picker>
+			</view>
+
+		</view>
+
+		<view style=" background-color:#FFF; margin-top:10rpx;{{torderGather.length>0?'':'padding-bottom: 150rpx;'}}">
+			
+			<view class="row input-text">
+				<!-- <label>預計交貨日期：</label> -->
+					<text style="margin-bottom:60px; margin-top:10px; text-align:left;">
+1.本報價單開立後如有材質、色系需更正，請於七日內通知賣方，報價單將重新開立，價格則依實際調整變更。\n
+2.買方認可報價單內容及價金，買賣雙方即可簽訂合約。\n
+3.買賣雙方簽訂合約時，買方須給付合約金額的50％做為訂金，貨物抵港15日內交貨完畢再收取總價50％尾款。\n
+4.本報價所示之產品均為客製化生產，若買方一經簽訂合約後取消訂購，則所收取之訂金歸賣方。\n
+5.本報價單總金額內含5%營業稅金。\n
+6.本報價單有效期間：30 天
+匯款資料：
+戶名：台昇國際股份有限公司
+銀行：中國信託銀行營業部
+帳號：901-54073155-6
+					</text>
+			</view>
+			<!--<view class="row">
+				<label>是否需要发票:</label>
+				<radio-group name='fInvoiceflag' class="radio-wrap" bindchange="onChangeTap">
+					<block wx:if="{{fInvoiceflag==''}}">
+						<block wx:for="{{items1}}">
+							<radio class="radio" value="{{item.value}}">
+								<text>{{item.text}}</text>
+							</radio>
+						</block>
+					</block>
+					<block wx:else>
+						<block wx:for="{{items1}}">
+							<block wx:if="{{fInvoiceflag==item.value}}">
+								<radio disabled="{{revise}}" class="radio" value="{{item.value}}" checked="checked">
+									<text>{{item.text}}</text>
+								</radio>
+							</block>
+							<block wx:else>
+								<radio disabled="{{revise}}" class="radio" value="{{item.value}}">
+									<text>{{item.text}}</text>
+								</radio>
+							</block>
+						</block>
+					</block>
+				</radio-group>
+			</view>
+
+			<view class="row">
+				<label>提貨方式：</label>
+				<radio-group name='fDeliverymethods' class="radio-wrap" bindchange="onChangeTap">
+					<block wx:if="{{fDeliverymethods==''}}">
+						<block wx:for="{{items2}}">
+							<radio class="radio" value="{{item.value}}">
+								<text>{{item.text}}</text>
+							</radio>
+						</block>
+					</block>
+					<block wx:else>
+						<block wx:for="{{items2}}">
+							<block wx:if="{{fDeliverymethods==item.value}}">
+								<radio disabled="{{revise}}" class="radio" value="{{item.value}}" checked="checked">
+									<text>{{item.text}}</text>
+								</radio>
+							</block>
+							<block wx:else>
+								<radio disabled="{{revise}}" class="radio" value="{{item.value}}">
+									<text>{{item.text}}</text>
+								</radio>
+							</block>
+						</block>
+					</block>
+				</radio-group>
+			</view>
+
+			<view class="row">
+				<label>是否有电梯:</label>
+				<radio-group name='fElevatorFlag' class="radio-wrap" bindchange="onChangeTap">
+					<block wx:if="{{fElevatorFlag==''}}">
+						<block wx:for="{{items1}}">
+							<radio class="radio" value="{{item.value}}">
+								<text>{{item.text}}</text>
+							</radio>
+						</block>
+					</block>
+					<block wx:else>
+						<block wx:for="{{items1}}">
+							<block wx:if="{{fElevatorFlag==item.value}}">
+								<radio disabled="{{revise}}" class="radio" value="{{item.value}}" checked="checked">
+									<text>{{item.text}}</text>
+								</radio>
+							</block>
+							<block wx:else>
+								<radio disabled="{{revise}}" class="radio" value="{{item.value}}">
+									<text>{{item.text}}</text>
+								</radio>
+							</block>
+						</block>
+					</block>
+				</radio-group>
+			</view>
+
+			<view class="row">
+				<label>是否需要吊车:</label>
+				<radio-group name='fCarFlag' class="radio-wrap" bindchange="onChangeTap">
+
+					<block wx:if="{{fCarFlag==''}}">
+						<block wx:for="{{items1}}">
+							<radio class="radio" value="{{item.value}}">
+								<text>{{item.text}}</text>
+							</radio>
+						</block>
+					</block>
+					<block wx:else>
+						<block wx:for="{{items1}}">
+							<block wx:if="{{fCarFlag==item.value}}">
+								<radio disabled="{{revise}}" class="radio" value="{{item.value}}" checked="checked">
+									<text>{{item.text}}</text>
+								</radio>
+							</block>
+							<block wx:else>
+								<radio disabled="{{revise}}" class="radio" value="{{item.value}}">
+									<text>{{item.text}}</text>
+								</radio>
+							</block>
+						</block>
+					</block>
+				</radio-group>
+			</view>
+
+			<view class="row">
+				<label>是否需要安装:</label>
+				<radio-group name='fInstallflag' class="radio-wrap" bindchange="onChangeTap">
+					<block wx:if="{{fInstallflag==''}}">
+						<block wx:for="{{items1}}">
+							<radio class="radio" value="{{item.value}}">
+								<text>{{item.text}}</text>
+							</radio>
+						</block>
+					</block>
+					<block wx:else>
+						<block wx:for="{{items1}}">
+							<block wx:if="{{fInstallflag==item.value}}">
+								<radio disabled="{{revise}}" class="radio" value="{{item.value}}" checked="checked">
+									<text>{{item.text}}</text>
+								</radio>
+							</block>
+							<block wx:else>
+								<radio disabled="{{revise}}" class="radio" value="{{item.value}}">
+									<text>{{item.text}}</text>
+								</radio>
+							</block>
+						</block>
+					</block>
+				</radio-group>
+			</view>
+			<block wx:if="{{revise==true&&entrance=='list'}}">
+				<view class="row input-text">
+					<button class="revise-orderhead" ontap="reviseorderhead">修改单头</button>
+				</view>
+			</block>-->
+		</view> 
+
+		<!-- 收款记录 -->
+		<view class="orderRecos" wx:if="{{torderGather.length>0}}">
+			<view class="orderReco" wx:for="{{torderGather}}" wx:for-item="Gather">
+				<label class="label">收款记录</label>
+				<view>
+					<label class="label">支付方式：</label>
+					<block wx:for="{{payway}}">
+						<text class="label" wx:if="{{item.value==Gather.fPayFlag}}">{{item.text}}</text>
+					</block>
+				</view>
+				<view>
+					<label class="label">费用形态：</label>
+					<block wx:for="{{payitem}}">
+						<text class="label" wx:if="{{item.value==Gather.fCostType}}">{{item.text}}</text>
+					</block>
+				</view>
+				<view>
+					<label class="label">收款金额：</label>
+					<text class="label">{{Gather.fAmount}}</text>
+				</view>
+				<view>
+					<label class="label">收款流水号：</label>
+					<text class="label">{{Gather.fBanksNo}}</text>
+				</view>
+				<view>
+					<label class="label">是否到帳：</label>
+					<text wx:if="{{Gather.fFinancialType=='N'}}" class="label">未到賬</text>
+					<text wx:if="{{Gather.fFinancialType=='Y'}}" class="text-color-green">已到賬</text>
+				</view>
+			</view>
+		</view>
+
+		<!--折價功能-->
+		<!--结算-->
+		<view class="footer-account-box1 order-accounts" style="flex-direction: column;height:230rpx;">
+			<view style="height:80rpx">
+				<text style="padding-left: 20rpx;">折扣碼:</text>
+				<input wx:if="{{!revise}}" class="radio input" style="display: block;" placeholder="輸入折扣碼" value="{{func.saleFunc(sales)}}" bindtap='sale'></input>
+				<view wx:else class="radio" style="display: block;">{{Order_Code_Sale?Order_Code_Sale:''}}</view>
+			</view>
+			<view style="border-top: 1rpx solid #ccc;">
+				<view class="total-account">
+					<!-- <text wx:if="{{entrance=='list'}}" decode="{{true}}">完整金額：$ {{account}}\n 優惠金額：${{-fFavorablemoney}} \n 成交金額：$ {{fSaleamount}}</text> -->
+					<!-- <text decode="{{true}}" wx:else>完整金額：$ {{account}}\n 優惠金額：${{-discountAmount}} \n 成交金額：$ {{saleamount}}</text> -->
+					<text wx:if="{{func.saleFunc(sales) != ''}}" decode="{{true}}">{{language.lang_order_fullprice}}：NT$ {{func.ToPriceStr(account)}}\n {{language.lang_order_dealprice}}：NT$ {{func.ToPriceStr(saleamount - finalDisPrice)}}</text>
+					<text wx:else decode="{{true}}">{{language.lang_order_fullprice}}：NT$ {{func.ToPriceStr(account)}}\n {{language.lang_order_dealprice}}：NT$ {{func.ToPriceStr(saleamount)}}</text>
+				</view>
+
+
+				<!-- 页面底部按钮 -->
+				<!-- <block wx:if="{{entrance=='list'}}">
+					<button wx:if="{{revise==true}}" class="pay disabled" ontap="showPopup">收款</button>
+					<button wx:else class="pay disabled" form-type='submit' data-type="revise">提交修改</button>
+				</block>
+				<block wx:else>
+					<button wx:if="{{revise!=true}}" class="pay disabled" form-type='submit' data-type="add">提交</button>
+					<button wx:else class="pay disabled" form-type='submit' data-type="revise">提交修改</button>
+				</block> -->
+				<button wx:if="{{revise==true}}"  class="pay disabled" form-type='submit' data-type="revise">{{language.lang_order_changeaccept}}</button>
+				<button wx:else class="pay disabled" form-type='submit' data-type="add">{{language.lang_order_accept}}</button>
+			</view>
+		</view>
+	</form>
+	<!-----------------------以上是from表单-------------------------- -->
+
+	<form bindsubmit="GatherFormSubmit">
+		<l-popup z-index="9999" show="{{showPopup}}" animation="show" content-align="center">
+			<scroll-view scroll-y="true" enable-flex="true" class="center-wrap">
+				<view class='center'>
+					<text class="title">收款记录</text>
+					<view class="row">
+						<label>支付方式：</label>
+						<radio-group name='payway' class="radio-wrap" bindchange="onChangeTap">
+							<radio class="radio" wx:for-items="{{payway}}" value="{{item.value}}">
+								<text>{{item.text}}</text>
+							</radio>
+						</radio-group>
+					</view>
+					<view class="row">
+						<label>费用形态：</label>
+						<radio-group name='payitem' class="radio-wrap" bindchange="onChangeTap">
+							<radio class="radio" wx:for-items="{{payitem}}" value="{{item.value}}">
+								<text>{{item.text}}</text>
+							</radio>
+						</radio-group>
+					</view>
+					<view class="row input-text">
+						<label>收款金额：</label>
+						<input name='moneyamount' class="radio input"></input>
+					</view>
+					<view class="row input-text">
+						<label>收款流水号：</label>
+						<input name='serialNumber' class="radio input"></input>
+					</view>
+					<button class="button" form-type='submit' bindtap="show">提交</button>
+				</view>
+			</scroll-view>
+		</l-popup>
+		<l-toast />
+
+		<l-popup z-index="9999" show="{{showQRCode}}" animation="show" content-align="center">
+			<view class="showQRCode">
+				<view style="margin:10rpx auto;font-size:40rpx;">二维码收款</view>
+				<view>收款金额:￥{{fAmount}}</view>
+				<view>订单号:{{fOrdNo}}</view>
+				<image src="data:image/png;base64,{{QrCodeUrl}}" z-index="99999"></image>
+				<view class="button-box">
+					<view class="button-view" bindtap="goToHomePage" data-fOrdID='{{fOrdID}}'>回到主頁</view>
+					<view class="button-view" bindtap="goToCart" data-fOrdID='{{fOrdID}}'>回到購物車</view>
+					<view class="button-view" bindtap="goToOrderList" data-fOrdID='{{fOrdID}}'>查看到賬</view>
+				</view>
+			</view>
+		</l-popup>
+	</form>
+</view>
+
+<loading hidden="{{loadingHidden}}">
+	{{language.loading}}
+</loading>
+
+<wxs module="func">
+      module.exports = {
+        ToPriceStr: function (e) {
+		  if(e == undefined) return '';
+          var tmpNum = (Math.round(e)).toString();
+          var tmpStr = '';
+          var strIndex = 0;
+          for (var i = (tmpNum.length - 1); i >= 0; i--) {
+            if(((strIndex % 3) == 0) && (strIndex != 0))
+            {
+              tmpStr = tmpNum[i] + "," + tmpStr;
+            }
+            else
+            {
+              tmpStr = tmpNum[i] + tmpStr;
+            }
+
+            strIndex = strIndex + 1;
+          }
+          return tmpStr;
+        },
+        isNull: function (e) {
+          if(e == null) return true;
+          if(e == '') return true;
+          if(e == undefined) return true;
+
+          return false;
+		},
+		saleFunc: function (e) {
+			if(e == []) return '';
+			var str = ''
+
+			e.forEach(function(item){
+				if(item.check == true){
+					if(item.type == 1){
+						str = str + item.name + '(' + item.percent + '%)  '
+					}
+					else if(item.type == 2){
+						str = str + item.name + '(NT$' + item.price + ')  '
+					}
+				}
+			})
+
+			return str
+		}
+      }
+</wxs> 

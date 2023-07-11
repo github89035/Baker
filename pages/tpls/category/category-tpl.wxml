@@ -1,0 +1,73 @@
+<template name="categorydetail">
+  <scroll-view scroll-y="true" enable-flex="true" class="center-wrap">
+
+  <view class="category-detail-box {{currentMenuIndex==TypeIndex?'':'hideView'}}" hidden="{{!categoryInfo}}">
+    <block wx:for="{{categoryInfo}}" wx:for-item="GroupInfo">
+        <template is="categorydetail_item" data="{{GroupInfo,currentTypeIndex,currentItemIndex,index}}" data-index="{{index}}" />
+    </block>
+  </view>
+
+  </scroll-view>
+</template>
+
+<template name="categorydetail_title">
+    <scroll-view scroll-y="true" enable-flex="true" class="center-wrap-button">
+    <view class="category-detail-button {{currentTypeIndex<99?'addRightLine':''}} {{currentTypeIndex==99?'maxWidth':''}}" hidden="{{!categoryInfo}}">
+      <block wx:for="{{categoryInfo}}" wx:for-item="itemInfo">
+        <view class="category-title" data-index="{{index}}"  bindtap="changeGroup" data-pSection="{{itemInfo.pSection}}" data-pBrand="{{itemInfo.pBrand}}">
+          <image mode="aspectFit" src="{{itemInfo.pImageURL}}" role="img"></image>
+          <view class="{{currentTypeIndex<99?'category-groupno':'category-typeno'}} {{currentTypeIndex==index?'selected':''}}" >{{itemInfo.pSectionName[langIndex]}}</view>
+        </view>
+      </block>
+    </view>
+  </scroll-view>
+</template>
+
+<template name="categorydetail_Type">
+    <scroll-view scroll-y="true" enable-flex="true" class="center-wrap-button">
+      <view class="category-detail-button {{currentTypeIndex<99?'addRightLine':''}} {{currentTypeIndex==99?'maxWidth':''}}" hidden="{{!categoryInfo}}">
+        <block wx:for="{{categoryInfo}}" wx:for-item="itemInfo">
+          <view class="category-title" data-index="{{index}}"  bindtap="changeGroup" data-pProductType="{{itemInfo.pProductType}}" data-pSection="{{itemInfo.pSection}}" data-pBrand="{{itemInfo.pBrand}}">
+          <image mode="aspectFit" src="{{itemInfo.pImageURL}}" role="img"></image>
+            <view class="{{currentTypeIndex<99?'category-groupno':'category-typeno'}} {{currentTypeIndex==index?'selected':''}}" >{{itemInfo.pProductTypeName[langIndex]}}</view>
+          </view>
+        </block>
+      </view>
+    </scroll-view>
+</template>
+
+<template name="categorydetail_item">
+    <scroll-view  scroll-y="true" enable-flex="true"  class="category-main {{nowSection=='COLLECTIONS'?'category-main-heightmax':''}} {{nowSection=='ROOM GALLERY'?'category-main-heightmax':''}}" >
+      <block wx:for="{{categoryInfo}}" wx:for-item="ItemInfo">
+
+        <view wx:if="{{ItemInfo.pSection=='COLLECTIONS'}}" class="category-goods-items-one" data-pSection="{{ItemInfo.pSection}}"  data-pBrand="{{ItemInfo.pBrand}}" data-pProductType="{{ItemInfo.pProductType}}" data-pProductCategory="{{ItemInfo.pProductCategory}}" data-isSub="{{ItemInfo.isSub}}" data-isSection="{{ItemInfo.isSection}}" data-isCollection="{{ItemInfo.isCollection}}" data-isRoomGallery="{{ItemInfo.isRoomGallery}}" data-pProductCategoryName="{{ItemInfo.pProductCategoryName[langIndex]}}" bindtap="onProductsGroupTap">
+          <!-- 产品类别图片 -->
+          <image src="{{ItemInfo.pImageURL}}" mode="aspectFit"></image>
+          <!-- 产品类别名称 -->
+          <view>{{ItemInfo.pProductCategoryName[langIndex]}}</view>
+        </view>
+
+        <view wx:elif="{{ItemInfo.pSection=='DESIGNERS'}}" class="category-goods-items-two" data-pSection="{{ItemInfo.pSection}}"  data-pBrand="{{ItemInfo.pBrand}}" data-pProductType="{{ItemInfo.pProductType}}" data-pProductCategory="{{ItemInfo.pProductCategory}}" data-isSub="{{ItemInfo.isSub}}" data-isSection="{{ItemInfo.isSection}}" data-isCollection="{{ItemInfo.isCollection}}" data-isRoomGallery="{{ItemInfo.isRoomGallery}}" data-pProductCategoryName="{{ItemInfo.pProductCategoryName[langIndex]}}" bindtap="onProductsGroupTap">
+          <!-- 产品类别图片 -->
+          <image src="{{ItemInfo.pImageURL}}" mode="aspectFit"></image>
+          <!-- 产品类别名称 -->
+          <view>{{ItemInfo.pProductCategoryName[langIndex]}}</view>
+        </view>
+
+        <view wx:elif="{{ItemInfo.pSection=='ROOM GALLERY'}}" class="category-goods-items-two" data-pSection="{{ItemInfo.pSection}}"  data-pBrand="{{ItemInfo.pBrand}}" data-pProductType="{{ItemInfo.pProductType}}" data-pProductCategory="{{ItemInfo.pProductCategory}}" data-isSub="{{ItemInfo.isSub}}" data-isSection="{{ItemInfo.isSection}}" data-isCollection="{{ItemInfo.isCollection}}" data-isRoomGallery="{{ItemInfo.isRoomGallery}}" data-pProductCategoryName="{{ItemInfo.pProductCategoryName[langIndex]}}" bindtap="onProductsGroupTap">
+          <!-- 产品类别图片 -->
+          <image src="{{ItemInfo.pImageURL}}" mode="aspectFit"></image>
+          <!-- 产品类别名称 -->
+          <view>{{ItemInfo.pProductCategoryName[langIndex]}}</view>
+        </view>
+
+        <view wx:else class="category-goods-items {{index%3==1?'middle':''}}" data-pSection="{{ItemInfo.pSection}}"  data-pBrand="{{ItemInfo.pBrand}}" data-pProductType="{{ItemInfo.pProductType}}" data-pProductCategory="{{ItemInfo.pProductCategory}}" data-isSub="{{ItemInfo.isSub}}" data-isSection="{{ItemInfo.isSection}}" data-isCollection="{{ItemInfo.isCollection}}" data-isRoomGallery="{{ItemInfo.isRoomGallery}}" data-pProductCategoryName="{{ItemInfo.pProductCategoryName[langIndex]}}" bindtap="onProductsGroupTap">
+          <!-- 产品类别图片 -->
+          <image src="{{ItemInfo.pImageURL}}" mode="aspectFit"></image>
+          <!-- 产品类别名称 -->
+          <view>{{ItemInfo.pProductCategoryName[langIndex]}}</view>
+        </view>
+
+      </block>
+    </scroll-view>
+</template>
